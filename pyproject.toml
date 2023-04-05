@@ -1,0 +1,22 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "spin"
+version = "0.0.1"
+description = "SPatial INtegration of spatially-resolved transcriptomics data"
+authors = [
+    {name = "Kamal Maher", email = "kmaher@mit.edu"},
+]
+readme = {file = "README.md", content-type="text/markdown"}
+license = {file = "LICENSE"}
+requires-python = ">=3.7"
+dependencies = [
+    "scanpy[leiden]",
+    "harmonypy",
+]
+
+[project.optional-dependencies]
+tutorial = ["squidpy"]
+test = ["squidpy"]
