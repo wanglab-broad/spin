@@ -1,4 +1,6 @@
 # SPIN: <ins>sp</ins>atial <ins>in</ins>tegration of spatially-resolved transcriptomics (SRT) data
+[![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ read the preprint here <br>
+[![Zenodo badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ access the data here <br>
 
 ## Installation
 
