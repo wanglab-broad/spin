@@ -63,7 +63,7 @@ def integrate(
         Either provide n_samples for each dataset or a single n_samples for all datasets.
         Needs to be the same length as n_nbrs.
     spatial_key
-        The key to spatial coordinates within adata.obsm.
+        The key to spatial coordinates within `adata.obsm`.
     n_pcs
         Number of PCs to calculate for dimension reduction.
     svd_solver
@@ -166,13 +166,13 @@ def cluster(
     adata
         SRT dataset
     pca_key
-        The key to PCA output within adata.obsm
+        The key to PCA output within `adata.obsm`.
     region_key
-        The key to store region labels under within adata.obs
+        The key to store region labels under within `adata.obs`.
     umap_key
-        The key to store UMAP output under within adata.obsm
+        The key to store UMAP output under within `adata.obsm`.
     resolution
-        Resolution for Leiden clustering
+        Resolution for Leiden clustering.
     verbose
         Display updates on function progress.
 
@@ -266,7 +266,7 @@ def _smooth(
         and columns to the adata indices of their nearest neighbors.
     n_samples
         Number of random neighbor samples used for averaging.
-        If None, sample 1/3 of n_nbrs inferred from `nbr_idxs`
+        If None, sample 1/3 of n_nbrs, which is inferred from `nbr_idxs`.
     random_state
         Random seed for randomly subsampling neighborhoods.
 
@@ -328,7 +328,7 @@ def _main(
     n_samples
         Number of random neighbor samples used for averaging.
     spatial_key
-        The key to spatial coordinates within adata.obsm.
+        The key to spatial coordinates within `adata.obsm`.
     n_pcs
         Number of PCs to calculate for dimension reduction.
     svd_solver
@@ -336,9 +336,9 @@ def _main(
     pca_key
         The key to store PCA output under within `adata.obsm`.
     region_key
-        The key to store region labels under within adata.obs
+        The key to store region labels under within `adata.obs`.
     umap_key
-        The key to store UMAP output under within adata.obsm
+        The key to store UMAP output under within `adata.obsm`.
     resolution
         Resolution for Leiden clustering
     verbose
