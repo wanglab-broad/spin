@@ -61,7 +61,7 @@ adata = spin.integrate(
 )
 ```
 
-After integration, the data can be clustered using `spin.cluster`, which performs UMAP and Leiden on the integrated expression PCs:
+After integration, the data can then be clustered using `spin.cluster`, which performs UMAP and Leiden on the integrated expression PCs:
 ```python
 adata = spin.cluster(
     adata,
