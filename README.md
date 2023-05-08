@@ -16,7 +16,7 @@ Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
 For Python package dependencies, see `pyproject.toml`.
 
 ### Data:
-Requires one or more SRT datasets in `.h5ad` format, each including an expression matrix under `.X` and spatial coordinates under `.obsm[<spatial_key>]`.
+Requires one or more SRT datasets in `.h5ad` format, each including an expression matrix under `.X` and spatial coordinates under `.obsm`.
 
 ## Usage
 ### In Python:
