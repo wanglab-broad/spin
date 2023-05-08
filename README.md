@@ -81,7 +81,7 @@ sc.set_figure_params(figsize=(5,5))
 sc.pl.embedding(adata, basis='X_umap_spin', color='region', s=3)
 ```
 
-For details on each parameter, run `help(spin)` after importing SPIN into Python.
+For details on the parameters of `spin.integrate` and `spin.cluster`, run `help(spin)` after importing SPIN into Python.
 
 For details on downstream analysis (e.g. DEG analysis, trajectory inference), please see the tutorial.
 
