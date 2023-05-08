@@ -20,7 +20,7 @@ Requires one or more SRT datasets in `.h5ad` format, each including an expressio
 
 ## Usage
 ### In Python:
-Consider the example marmoset and mouse data we provide:
+Consider the marmoset and mouse data we provide as a demo:
 ```python
 adata = sc.read_h5ad(
     'data/demo.h5ad',
