@@ -16,7 +16,3 @@ dependencies = [
     "scanpy[leiden]",
     "harmonypy",
 ]
-
-[project.optional-dependencies]
-tutorial = ["squidpy"]
-test = ["squidpy"]
