@@ -84,7 +84,7 @@ Downstream analysis (e.g. DEG analysis, trajectory inference) can then be perfor
 
 For details on the parameters of `spin.integrate` and `spin.cluster`, run `help(spin)` after importing SPIN into Python.
 
-For details on downstream analysis, please see the tutorial.
+For details on downstream analysis, please see the tutorial `.ipynb`.
 
 ### From the shell:
 Requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python (e.g. above):
