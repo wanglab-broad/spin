@@ -88,7 +88,7 @@ Downstream analysis (e.g. DEG analysis, trajectory inference) can then be perfor
 
 For details on the parameters of `spin.integrate` and `spin.cluster`, run `help(spin)` after importing SPIN into Python.
 
-For details on downstream analysis, please see the [tutorial](docs/tutorials/tutorial.ipynb) notebook.
+For details on downstream analysis, please see the [tutorial](docs/tutorials/tutorial.ipynb).
 
 ### From the shell:
 Requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python (e.g. above):
@@ -148,4 +148,4 @@ Here, we implement an approach in which each cell's spatial neighborhood is rand
    <img src="docs/imgs/github_obstacle_2-01.png" width="550">
 </p>
 
-Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features, yielding regional analogies for each tool. For more details, please refer to the manuscript.
+Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features, yielding regional analogies for each tool. For more details and examples, please refer to the manuscript and [tutorial](docs/tutorials/tutorial.ipynb).
