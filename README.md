@@ -2,7 +2,9 @@
 [![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ read the preprint here <br>
 [![Zenodo badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ access the data here <br>
 
-This package is an implementation of the approach described in the manuscript linked above. In short, conventional single-cell analysis can identify molecular *cell types* by considering each cell individually, without spatial information.
+This package is an implementation of the approach described in the manuscript linked above. Here is a brief description of this approach:
+
+Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually. However, it does not incorporate spatial information.
 ![alt text]
 
 Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across cells in the tissue. This can be done by setting the features of each cell to the average of its spatial neighborhood.
