@@ -2,6 +2,22 @@
 [![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ read the preprint here <br>
 [![Zenodo badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ access the data here <br>
 
+This package is an implementation of the approach described in the manuscript linked above. In short, conventional single-cell analysis can identify molecular *cell types* by considering each cell individually, without spatial information.
+![alt text]
+
+Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across cells in the tissue. This can be done by setting the features of each cell to the average of its spatial neighborhood.
+![alt text]
+
+However, a problem arises when smoothed representations of each cell are compared to one another. Physically adjacent cells will have almost identical neighborhoods and thus identical smoothed representations.
+![alt text]
+
+Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, we run into a problem: nearest neighbors in feature space are just nearest neighbors in physical space. This leads to reconstruction of physical space in latent space rather than identifying the desired large-scale molecular patterns.
+
+Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
+![alt text]
+
+Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features, yielding regional analogies for each tool. For more details, please refer to the manuscript.
+
 ## Installation
 
 ### From GitHub:
@@ -41,7 +57,7 @@ adata = spin.integrate(
     n_samples=12,
 )
 ```
-In short, this performs spatial subsampling and smoothing to each dataset individually (details in paper linked above), performs PCA jointly, integrates the resulting PCs using Harmony, and stores the output under `adata.obsm['X_pca_spin']`.
+In short, this performs spatial subsampling and smoothing to each dataset individually (details in manuscript linked above), performs PCA jointly, integrates the resulting PCs using Harmony, and stores the output under `adata.obsm['X_pca_spin']`.
 
 Alternatively, one can provide multiple datasets corresponding to each batch:
 ```python
