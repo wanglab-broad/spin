@@ -5,18 +5,26 @@
 This package is an implementation of the approach described in the manuscript linked above. Here is a brief description of this approach:
 
 Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually. However, it does not incorporate spatial information.
-![alt text]
+<p align="center">
+   <img src="docs/imgs/github_idea_1-01.png" width="500">
+</p>
 
 Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across cells in the tissue. This can be done by setting the features of each cell to the average of its spatial neighborhood.
-![alt text]
+<p align="center">
+   <img src="docs/imgs/github_idea_2-01.png" width="670">
+</p>
 
 However, a problem arises when smoothed representations of each cell are compared to one another. Physically adjacent cells will have almost identical neighborhoods and thus identical smoothed representations.
-![alt text]
+<p align="center">
+   <img src="docs/imgs/github_obstacle_1-01.png" width="550">
+</p>
 
 Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, we run into a problem: nearest neighbors in feature space are just nearest neighbors in physical space. This leads to reconstruction of physical space in latent space rather than identifying the desired large-scale molecular patterns.
 
 Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
-![alt text]
+<p align="center">
+   <img src="docs/imgs/github_obstacle_2-01.png" width="550">
+</p>
 
 Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features, yielding regional analogies for each tool. For more details, please refer to the manuscript.
 
@@ -104,7 +112,7 @@ Downstream analysis (e.g. DEG analysis, trajectory inference) can then be perfor
 
 For details on the parameters of `spin.integrate` and `spin.cluster`, run `help(spin)` after importing SPIN into Python.
 
-For details on downstream analysis, please see the [tutorial](tutorials/tutorial.ipynb) notebook.
+For details on downstream analysis, please see the [tutorial](docs/tutorials/tutorial.ipynb) notebook.
 
 ### From the shell:
 Requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python (e.g. above):
