@@ -2,7 +2,7 @@
 [![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ read the preprint here <br>
 [![Zenodo badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ access the data here <br>
 
-This package is a lightweight, Scanpy-based implementation of the approach described in the manuscript linked above. For a conceptual overview of the approach, see the last section of this document below. For further details, please refer to the manuscript.
+This package is a lightweight, Scanpy-based implementation of the approach described in the manuscript linked above. For a conceptual overview of the approach, see the last section of this document below. For further details, please refer to the manuscript or [tutorial](docs/tutorials/tutorial.ipynb).
 
 ## Installation
 
