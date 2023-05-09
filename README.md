@@ -2,31 +2,7 @@
 [![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ read the preprint here <br>
 [![Zenodo badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ access the data here <br>
 
-This package is an implementation of the approach described in the manuscript linked above. Here is a brief description of this approach:
-
-Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually. However, it does not incorporate spatial information.
-<p align="center">
-   <img src="docs/imgs/github_idea_1-01.png" width="500">
-</p>
-
-Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across cells in the tissue. This can be done by setting the features of each cell to the average of its spatial neighborhood.
-<p align="center">
-   <img src="docs/imgs/github_idea_2-01.png" width="670">
-</p>
-
-However, a problem arises when smoothed representations of each cell are compared to one another. Physically adjacent cells will have almost identical neighborhoods and thus identical smoothed representations.
-<p align="center">
-   <img src="docs/imgs/github_obstacle_1-01.png" width="550">
-</p>
-
-Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, we run into a problem: nearest neighbors in feature space are just nearest neighbors in physical space. This leads to reconstruction of physical space in latent space rather than identifying the desired large-scale molecular patterns.
-
-Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
-<p align="center">
-   <img src="docs/imgs/github_obstacle_2-01.png" width="550">
-</p>
-
-Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features, yielding regional analogies for each tool. For more details, please refer to the manuscript.
+This package is a lightweight, Scanpy-based implementation of the approach described in the manuscript linked above. For a conceptual overview of the approach, see the last section of this document below. For further details, please refer to the manuscript.
 
 ## Installation
 
@@ -148,3 +124,28 @@ python spin/src/spin.py \
 --n_samples 12 \
 --resolution "0.5"
 ```
+
+## Conceptual overview
+Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually. However, it does not incorporate spatial information.
+<p align="center">
+   <img src="docs/imgs/github_idea_1-01.png" width="500">
+</p>
+
+Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across cells in the tissue. This can be done by setting the features of each cell to the average of its spatial neighborhood.
+<p align="center">
+   <img src="docs/imgs/github_idea_2-01.png" width="670">
+</p>
+
+However, a problem arises when smoothed representations of each cell are compared to one another. Physically adjacent cells will have almost identical neighborhoods and thus identical smoothed representations.
+<p align="center">
+   <img src="docs/imgs/github_obstacle_1-01.png" width="550">
+</p>
+
+Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, we run into a problem: nearest neighbors in feature space are just nearest neighbors in physical space. This leads to reconstruction of physical space in latent space rather than identifying the desired large-scale molecular patterns.
+
+Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
+<p align="center">
+   <img src="docs/imgs/github_obstacle_2-01.png" width="550">
+</p>
+
+Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features, yielding regional analogies for each tool. For more details, please refer to the manuscript.
