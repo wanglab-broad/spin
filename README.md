@@ -49,12 +49,12 @@ Installation should complete within ~2 mins.
 ## Requirements:
 
 ### Software:
-Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
+* Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
 
-For Python package dependencies, see `pyproject.toml`.
+* For Python package dependencies, see `pyproject.toml`.
 
 ### Data:
-Requires one or more SRT datasets in `.h5ad` format, each including an expression matrix under `.X` and spatial coordinates under `.obsm`.
+* Requires one or more SRT datasets in `.h5ad` format, each including an expression matrix under `.X` and spatial coordinates under `.obsm`.
 
 ## Usage
 ### In Python:
@@ -119,7 +119,7 @@ sc.pl.embedding(adata, basis='X_umap_spin', color='region', s=3)
 ```
 Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
 
-For details on the parameters of `spin.integrate` and `spin.cluster`, run `help(spin)` after importing SPIN into Python.
+For details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
 
 For details on downstream analysis, please see the [tutorial](docs/tutorials/tutorial.ipynb).
 
