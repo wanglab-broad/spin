@@ -136,7 +136,7 @@ Arguably the simplest way to incorporate spatial information and identify molecu
    <img src="docs/imgs/github_idea_2-01.png" width="670">
 </p>
 
-However, a problem arises when smoothed representations of each cell are compared to one another. Physically adjacent cells will have almost identical neighborhoods and thus identical smoothed representations.
+However, a problem arises when smoothed representations of each cell are compared to one another. Physically adjacent cells will have almost identical neighborhoods and thus almost identical smoothed representations.
 <p align="center">
    <img src="docs/imgs/github_obstacle_1-01.png" width="550">
 </p>
