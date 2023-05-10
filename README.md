@@ -39,7 +39,7 @@ SPIN is a lightweight, Scanpy-based implementation of the subsampling and smooth
    <img src="docs/imgs/github_obstacle_2_dark.png" width="600">
 </picture>
 
-Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features, yielding regional analogies for each tool. For more details and examples, please refer to the manuscript and [tutorial](docs/tutorials/tutorial.ipynb).
+Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features in SRT data, yielding regional analogies for each tool. For more details and examples, please refer to the manuscript and [tutorial](docs/tutorials/tutorial.ipynb).
 
 
 ## Installation
