@@ -288,7 +288,7 @@ def _smooth(
     for nth_nbrs in np.array(nbr_idxs_sampled).T:
         X_smooth += adata.X[nth_nbrs] / n_samples
 
-    adata.layers['smooth'] = X_smooth
+    adata.layers['smooth'] = np.array(X_smooth) # in case adata.X is sparse
     adata.uns['n_samples'] = n_samples
 
 
