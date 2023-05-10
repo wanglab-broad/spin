@@ -51,9 +51,8 @@ def integrate(
         multiple samples.
         If only analyzing a single sample, leave as `None`.
     batch_labels
-        Labels corresponding to each sample. Relevant when integrating across multiple
-        samples. Will be stored under `adata.obs[<batch_key>]`.
-        If only analyzing a single sample, leave as `None`.
+        Labels corresponding to each adata. Will be stored under `adata.obs[<batch_key>]`.
+        Required if passing in multiple adatas. Otherwise, leave as `None`.
     n_nbrs
         Number of nearest neighbors to find for each cell.
         Either provide n_nbrs for each dataset or a single n_nbrs for all datasets.
