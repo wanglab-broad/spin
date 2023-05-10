@@ -5,30 +5,35 @@
 SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the manuscript linked above. It enables the alignment of transcriptionally-defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology. This repository contains a conceptual overview of the approach, instructions for installation, basic usage principles, and a [tutorial](docs/tutorials/tutorial.ipynb) notebook.
 
 ## Conceptual overview
-Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually. However, it does not incorporate spatial information.
+* Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually.
+* However, it does not incorporate spatial information.
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_idea_1_light.png">
    <source media="(prefers-color-scheme: dark)" srcset="docs/imgs/github_idea_1_dark.png">
    <img src="docs/imgs/github_idea_1_dark.png" width="500">
 </picture>
 
-Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across cells in the tissue. This can be done by setting the features of each cell to the average of its spatial neighborhood.
+* Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across cells in the tissue.
+* This can be done by setting the features of each cell to the average of its spatial neighborhood.
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_idea_2_light.png">
    <source media="(prefers-color-scheme: dark)" srcset="docs/imgs/github_idea_2_dark.png">
    <img src="docs/imgs/github_idea_2_dark.png" width="670">
 </picture>
 
-However, a problem arises when smoothed representations of each cell are compared to one another. Physically adjacent cells will have almost identical neighborhoods and thus almost identical smoothed representations.
+* However, a problem arises when smoothed representations of each cell are compared to one another.
+* Physically adjacent cells will have almost identical neighborhoods and thus almost identical smoothed representations.
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_obstacle_1_light.png">
    <source media="(prefers-color-scheme: dark)" srcset="docs/imgs/github_obstacle_1_dark.png">
    <img src="docs/imgs/github_obstacle_1_dark.png" width="600">
 </picture>
 
-Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, we run into a problem: nearest neighbors in feature space are just nearest neighbors in physical space. This leads to reconstruction of physical space in latent space rather than identifying the desired large-scale molecular patterns.
+* Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, we run into a problem:
+* Nearest neighbors in feature space are just nearest neighbors in physical space.
+* This leads to reconstruction of physical space in latent space rather than identifying the desired large-scale molecular patterns.
 
-Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
+* Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_obstacle_2_light.png">
    <source media="(prefers-color-scheme: dark)" srcset="docs/imgs/github_obstacle_2_dark.png">
