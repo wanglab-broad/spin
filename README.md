@@ -92,7 +92,7 @@ adata = spin.cluster(
 
 This performs the following steps:
 * `spin.integrate`:
-   1. Spatial neighborhood subsampling and smoothing of each dataset individually (stored under `adata.layers['smooth']`)
+   1. Subsampling and smoothing of each dataset individually (stored under `adata.layers['smooth']`)
    2. Joint PCA across both smoothed datasets
    3. Integration of the resulting PCs using Harmony (stored under `adata.obsm['X_pca_spin']`)
 * `spin.cluster`:
@@ -111,6 +111,7 @@ sc.set_figure_params(figsize=(5,5))
 sc.pl.embedding(adata, basis='X_umap_spin', color='region', s=3)
 ```
 Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
+For details on downstream analysis, see the [tutorial](docs/tutorials/tutorial.ipynb).
 
 Alternatively, one can provide multiple datasets with batch labels corresponding to each dataset:
 ```python
@@ -131,10 +132,7 @@ adata = spin.integrate(
     n_samples=12,
 )
 ```
-
-For details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
-
-For details on downstream analysis, please see the [tutorial](docs/tutorials/tutorial.ipynb).
+For further details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
 
 ### From the shell:
 Requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python (e.g. above):
