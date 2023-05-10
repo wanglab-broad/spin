@@ -33,19 +33,18 @@ adata = sc.read_h5ad(
 ```
 This dataset contains expression and spatial data from marmoset and mouse brains, corresponding to the cell labels `'marmoset'` and `'mouse'` under the key `.obs['species']`.
 
-To spatially integrate this data, the single dataset can be passed into `spin.integrate` while specifying the batch key along with the unique batch labels:
+To spatially integrate this data, the single dataset can be passed into `spin.integrate` while specifying the batch key:
 ```python
 adata = spin.integrate(
     adata,
     batch_key='species',
-    batch_labels=['marmoset', 'mouse'],
     n_nbrs=30,
     n_samples=12,
 )
 ```
 In short, this applies spatial subsampling and smoothing to each dataset individually (details in manuscript linked above), performs PCA jointly, integrates the resulting PCs using Harmony, and stores the output under `adata.obsm['X_pca_spin']`.
 
-Alternatively, one can provide multiple datasets corresponding to each batch:
+Alternatively, one can provide multiple datasets with batch labels corresponding to each dataset:
 ```python
 adata = spin.integrate(
     [adata_marmoset, adata_mouse],
