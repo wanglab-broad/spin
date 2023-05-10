@@ -29,10 +29,9 @@ SPIN is a lightweight, Scanpy-based implementation of the subsampling and smooth
    <img src="docs/imgs/github_obstacle_1_dark.png" width="600">
 </picture>
 
-* Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, we run into a problem:
+* Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, we run into a problem.
 * Nearest neighbors in feature space are just nearest neighbors in physical space.
 * This leads to reconstruction of physical space in latent space rather than identifying the desired large-scale molecular patterns.
-
 * Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_obstacle_2_light.png">
