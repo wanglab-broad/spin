@@ -43,7 +43,7 @@ adata = spin.integrate(
     n_samples=12,
 )
 ```
-In short, this performs spatial subsampling and smoothing to each dataset individually (details in manuscript linked above), performs PCA jointly, integrates the resulting PCs using Harmony, and stores the output under `adata.obsm['X_pca_spin']`.
+In short, this applies spatial subsampling and smoothing to each dataset individually (details in manuscript linked above), performs PCA jointly, integrates the resulting PCs using Harmony, and stores the output under `adata.obsm['X_pca_spin']`.
 
 Alternatively, one can provide multiple datasets corresponding to each batch:
 ```python
