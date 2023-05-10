@@ -26,7 +26,7 @@ SPIN is a lightweight, Scanpy-based implementation of the subsampling and smooth
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_obstacle_1_light.png">
    <source media="(prefers-color-scheme: dark)" srcset="docs/imgs/github_obstacle_1_dark.png">
-   <img src="docs/imgs/github_obstacle_1_dark.png" width="600">
+   <img src="docs/imgs/github_obstacle_1_dark.png" width="550">
 </picture>
 
 * Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, we run into a problem.
@@ -36,7 +36,7 @@ SPIN is a lightweight, Scanpy-based implementation of the subsampling and smooth
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_obstacle_2_light.png">
    <source media="(prefers-color-scheme: dark)" srcset="docs/imgs/github_obstacle_2_dark.png">
-   <img src="docs/imgs/github_obstacle_2_dark.png" width="600">
+   <img src="docs/imgs/github_obstacle_2_dark.png" width="550">
 </picture>
 
 Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features in SRT data, yielding regional analogies for each tool. For more details and examples, please refer to the manuscript and [tutorial](docs/tutorials/tutorial.ipynb).
@@ -48,17 +48,19 @@ Ultimately, this approach enables the application of conventional single-cell to
 ```
 pip install git+https://github.com/wanglab-broad/spin@main
 ```
-Installation should complete within ~2 mins.
+Installation takes ~2 mins.
 
 ## Requirements:
 
 ### Software:
 * Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
-
 * For Python package dependencies, see `pyproject.toml`.
 
 ### Data:
-* Requires one or more SRT datasets in `.h5ad` format, each including an expression matrix under `.X` and spatial coordinates under `.obsm`.
+* One or more SRT datasets in `.h5ad` format
+* An expression matrix under `.X` (both sparse and dense representations supported)
+* Spatial coordinates under `.obsm` (can be specified with argument `spatial_key`)
+* if multiple SRT datasets, batch labels stored under `.obs` (can be specified with argument `batch_key`)
 
 ## Usage
 ### In Python:
@@ -71,16 +73,44 @@ adata = sc.read_h5ad(
 ```
 This dataset contains expression and spatial data from marmoset and mouse brains, corresponding to the cell labels `'marmoset'` and `'mouse'` under the key `.obs['species']`.
 
-To spatially integrate this data, the single dataset can be passed into `spin.integrate` while specifying the batch key:
+To spatially integrate and cluster this data, the single dataset can be passed into `spin.integrate` while specifying the batch key, followed by `spin.cluster`:
 ```python
+import spin
+
 adata = spin.integrate(
     adata,
     batch_key='species',
     n_nbrs=30,
     n_samples=12,
 )
+
+adata = spin.cluster(
+    adata,
+    resolution=0.5
+)
 ```
-In short, this applies spatial subsampling and smoothing to each dataset individually (details in manuscript linked above), performs PCA jointly, integrates the resulting PCs using Harmony, and stores the output under `adata.obsm['X_pca_spin']`.
+
+This performs the following steps:
+* `spin.integrate`:
+   1. Spatial neighborhood subsampling and smoothing of each dataset individually (stored under `adata.layers['smooth']`)
+   2. Joint PCA across both smoothed datasets
+   3. Integration of the resulting PCs using Harmony (stored under `adata.obsm['X_pca_spin']`)
+* `spin.cluster`:
+   1. Latent neighbor search
+   2. Leiden clustering (stored under `adata.obs['region']`)
+   3. UMAP (stored under `adata.obsm['X_umap_spin']`)
+
+The resulting region clusters can then be visualized using standard Scanpy functions:
+```python
+# In physical space
+sc.set_figure_params(figsize=(8,5))
+sc.pl.embedding(adata, basis='spatial', color='region', s=7)
+
+# In UMAP space
+sc.set_figure_params(figsize=(5,5))
+sc.pl.embedding(adata, basis='X_umap_spin', color='region', s=3)
+```
+Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
 
 Alternatively, one can provide multiple datasets with batch labels corresponding to each dataset:
 ```python
@@ -101,27 +131,6 @@ adata = spin.integrate(
     n_samples=12,
 )
 ```
-
-After integration, the data can then be clustered using `spin.cluster`, which performs UMAP and Leiden on the integrated expression PCs:
-```python
-adata = spin.cluster(
-    adata,
-    resolution=0.5
-)
-```
-Region clusters are stored under `.obs['region']` and UMAP coordinates under `.obsm['X_umap_spin']`.
-
-The resulting region clusters can then be visualized using standard Scanpy functions:
-```python
-# In physical space
-sc.set_figure_params(figsize=(8,5))
-sc.pl.embedding(adata, basis='spatial', color='region', s=7)
-
-# In UMAP space
-sc.set_figure_params(figsize=(5,5))
-sc.pl.embedding(adata, basis='X_umap_spin', color='region', s=3)
-```
-Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
 
 For details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
 
