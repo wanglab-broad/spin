@@ -51,7 +51,7 @@ Ultimately, this approach enables the application of conventional single-cell to
 
 ### Software:
 * Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
-* For Python package dependencies, see `pyproject.toml`.
+* The only dependency is Scanpy. For details, see [`pyproject.toml`](pyproject.toml).
 
 ### Data:
 * One or more SRT datasets in `.h5ad` format
