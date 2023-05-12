@@ -65,7 +65,7 @@ Ultimately, this approach enables the application of conventional single-cell to
 ```
 pip install git+https://github.com/wanglab-broad/spin@main
 ```
-Installation takes ~2 mins.
+Takes ~5 mins.
 
 ## 4. Usage
 ### In Python:
