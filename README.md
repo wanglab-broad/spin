@@ -118,7 +118,7 @@ sc.set_figure_params(figsize=(5,5))
 sc.pl.embedding(adata, basis='X_umap_spin', color='region', s=3)
 ```
 Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
-For details on downstream analysis, see the [tutorial](docs/tutorials/tutorial.ipynb).
+For examples of downstream analysis, see the [tutorial](docs/tutorials/tutorial.ipynb).
 
 Alternatively, for integration, one can provide multiple datasets with batch labels corresponding to each dataset:
 ```python
