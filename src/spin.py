@@ -86,12 +86,12 @@ def integrate(
     if (type(n_samples) == int) or (n_samples == None):
         n_samples = [n_samples]
 
-    # Split single adata by batch, if batches provided
+    # Split single adata by batch, if batch_key provided
     n_adatas = len(adatas)
     if (n_adatas == 1):
-        if verbose:
-            logger.info(f'Splitting adata by `{batch_key}`')
         if batch_key:
+            if verbose:
+                logger.info(f'Splitting adata by `{batch_key}`')
             batch_labels = adatas[0].obs[batch_key].unique() # TODO: verify automatic batching
             adatas = [adatas[0][adatas[0].obs[batch_key]==batch] for batch in batch_labels]
             n_adatas = len(adatas)
