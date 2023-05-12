@@ -56,8 +56,8 @@ Ultimately, this approach enables the application of conventional single-cell to
 ### Data:
 * One or more SRT datasets in `.h5ad` format
 * An expression matrix under `.X` (both sparse and dense representations supported)
-* Spatial coordinates under `.obsm` (can be specified with argument `spatial_key`)
-* if multiple SRT datasets, batch labels stored under `.obs` (can be specified with argument `batch_key`)
+* Spatial coordinates under `.obsm` (key can be specified with argument `spatial_key`)
+* if multiple SRT datasets, batch labels stored under `.obs` (key can be specified with argument `batch_key`)
 
 ## 3. Installation
 
