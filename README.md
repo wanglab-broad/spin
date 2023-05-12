@@ -6,7 +6,7 @@ SPIN is a lightweight, Scanpy-based implementation of the subsampling and smooth
 
 1. A conceptual overview of the approach
 2. Package requirements
-3. Instructions for installation
+3. Installation instructions
 4. Basic usage principles
 
 For examples of downstream analysis (e.g. differentially-expressed gene analysis and trajectory inference), see the [tutorial](docs/tutorials/tutorial.ipynb) notebook. For further details on SPIN parameters, import SPIN into Python and run `help(spin)`.
