@@ -3,11 +3,13 @@
 [![Zenodo badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ access the data here <br>
 
 SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the manuscript linked above. It enables the alignment and analysis of transcriptionally-defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology. This README contains information regarding:
+
 1. A conceptual overview of the approach
 2. Package requirements
 3. Instructions for installation
 4. Basic usage principles
-5. A [tutorial](docs/tutorials/tutorial.ipynb) notebook.
+
+For examples of downstream analysis (e.g. differentially-expressed gene analysis and trajectory inference), see the [tutorial](docs/tutorials/tutorial.ipynb) notebook. For further details on SPIN parameters, import SPIN into Python and run `help(spin)`.
 
 ## 1. Conceptual overview
 * Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually.
