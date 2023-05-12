@@ -91,9 +91,10 @@ def integrate(
     if (n_adatas == 1):
         if verbose:
             logger.info(f'Splitting adata by `{batch_key}`')
-        batch_labels = adatas[0].obs[batch_key].unique() # TODO: verify automatic batching
-        adatas = [adatas[0][adatas[0].obs[batch_key]==batch] for batch in batch_labels]
-        n_adatas = len(adatas)
+        if batch_key:
+            batch_labels = adatas[0].obs[batch_key].unique() # TODO: verify automatic batching
+            adatas = [adatas[0][adatas[0].obs[batch_key]==batch] for batch in batch_labels]
+            n_adatas = len(adatas)
 
     # If single n_nbrs/n_samples for multiple batches, clone
     if len(n_nbrs) < n_adatas:
