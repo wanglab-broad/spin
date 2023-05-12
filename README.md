@@ -102,7 +102,7 @@ This performs the following steps:
    3. Integration of the resulting PCs using Harmony (stored under `adata.obsm['X_pca_spin']`)
 * `spin.cluster`:
    1. Latent neighbor search
-   2. Leiden clustering (stored under `adata.obs['region']`)
+   2. Leiden clustering with a resolution of 0.5 (stored under `adata.obs['region']`)
    3. UMAP (stored under `adata.obsm['X_umap_spin']`)
 
 The resulting region clusters can then be visualized using standard Scanpy functions:
