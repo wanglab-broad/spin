@@ -2,9 +2,14 @@
 [![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ read the preprint here <br>
 [![Zenodo badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ access the data here <br>
 
-SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the manuscript linked above. It enables the alignment of transcriptionally-defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology. This repository contains a conceptual overview of the approach, instructions for installation, basic usage principles, and a [tutorial](docs/tutorials/tutorial.ipynb) notebook.
+SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the manuscript linked above. It enables the alignment of transcriptionally-defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology. This README contains information regarding:
+1. A conceptual overview of the approach
+2. Package requirements
+3. Instructions for installation
+4. Basic usage principles
+5. A [tutorial](docs/tutorials/tutorial.ipynb) notebook.
 
-## Conceptual overview
+## 1. Conceptual overview
 * Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually.
 * However, it does not incorporate spatial information.
 <picture>
@@ -41,16 +46,7 @@ SPIN is a lightweight, Scanpy-based implementation of the subsampling and smooth
 
 Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features in SRT data, yielding regional analogies for each tool. For more details and examples, please refer to the manuscript and [tutorial](docs/tutorials/tutorial.ipynb).
 
-
-## Installation
-
-### From GitHub:
-```
-pip install git+https://github.com/wanglab-broad/spin@main
-```
-Installation takes ~2 mins.
-
-## Requirements:
+## 2. Requirements:
 
 ### Software:
 * Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
@@ -62,7 +58,15 @@ Installation takes ~2 mins.
 * Spatial coordinates under `.obsm` (can be specified with argument `spatial_key`)
 * if multiple SRT datasets, batch labels stored under `.obs` (can be specified with argument `batch_key`)
 
-## Usage
+## 3. Installation
+
+### From GitHub:
+```
+pip install git+https://github.com/wanglab-broad/spin@main
+```
+Installation takes ~2 mins.
+
+## 4. Usage
 ### In Python:
 Consider the marmoset and mouse data we provide as a demo:
 ```python
@@ -113,7 +117,7 @@ sc.pl.embedding(adata, basis='X_umap_spin', color='region', s=3)
 Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
 For details on downstream analysis, see the [tutorial](docs/tutorials/tutorial.ipynb).
 
-Alternatively, one can provide multiple datasets with batch labels corresponding to each dataset:
+Alternatively, for integration, one can provide multiple datasets with batch labels corresponding to each dataset:
 ```python
 adata = spin.integrate(
     [adata_marmoset, adata_mouse],
