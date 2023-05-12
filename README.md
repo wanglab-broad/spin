@@ -78,7 +78,7 @@ adata = sc.read_h5ad(
      backup_url='https://zenodo.org/record/TEMP/files/demo.h5ad?download=1'
 )
 ```
-This dataset contains expression and spatial data from marmoset and mouse brains, corresponding to the cell labels `'marmoset'` and `'mouse'` under the key `.obs['species']`.
+This dataset contains expression and spatial data from marmoset and mouse brains, corresponding to the cell labels `'marmoset'` and `'mouse'` under `.obs['species']`.
 
 To spatially integrate and cluster this data, the single dataset can be passed into `spin.integrate` while specifying the batch key, followed by `spin.cluster`:
 ```python
