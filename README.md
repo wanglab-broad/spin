@@ -37,7 +37,7 @@ For examples of downstream analysis (e.g. differentially-expressed gene analysis
 </picture>
 
 * Thus, we end up with nearest neighbors in feature space that are just nearest neighbors in physical space.
-* Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, this leads to reconstruction of physical space in latent space rather than representing the true underlying large-scale molecular patterns (i.e. spatially-variable genes).
+* Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, this leads to reconstruction of physical space in latent space rather than representing the true underlying large-scale molecular patterns.
 * Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_obstacle_2_light.png">
