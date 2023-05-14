@@ -37,7 +37,7 @@ For examples of downstream analysis (e.g. differentially-expressed gene analysis
 </picture>
 
 * Thus, we end up with nearest neighbors in feature space that are just nearest neighbors in physical space.
-* Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, this leads to reconstruction of physical space in latent space rather than representing the true underlying large-scale molecular patterns (i.e. classes of spatially-variable genes).
+* Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, this leads to reconstruction of physical space in latent space rather than representing the true underlying large-scale molecular patterns (i.e. spatially-variable genes).
 * Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_obstacle_2_light.png">
@@ -51,6 +51,7 @@ Ultimately, this approach enables the application of conventional single-cell to
 
 ### Software:
 * Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
+* Python >= 3.9
 * The only dependency is Scanpy. For details, see [`pyproject.toml`](pyproject.toml).
 
 ### Data:
@@ -59,7 +60,7 @@ Ultimately, this approach enables the application of conventional single-cell to
 * Spatial coordinates under `.obsm` (key can be specified with argument `spatial_key`)
 * Batch information
    * If multiple batches in single dataset, batch labels provided under `.obs` with key `batch_key`.
-   * If multiple batches in individual datasets, batch labels for each dataset provided as input.
+   * If multiple batches in separate datasets, batch labels for each dataset provided as input.
 
 ## 3. Installation
 
@@ -148,7 +149,6 @@ python spin/src/spin.py \
 --adata_paths data/demo.h5ad \
 --write_path data/demo_integrated.h5ad \
 --batch_key species \
---batch_labels marmoset mouse \
 --n_nbrs 30 \
 --n_samples 12 \
 --resolution "0.5"
