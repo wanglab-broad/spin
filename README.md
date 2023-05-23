@@ -2,7 +2,7 @@
 [![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ read the preprint here <br>
 [![Zenodo badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ access the data here <br>
 
-SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the manuscript linked above. It enables the alignment and analysis of transcriptionally-defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology, using conventional single-cell tools. Here we include information regarding:
+SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the preprint linked above. It enables the alignment and analysis of transcriptionally-defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology, using conventional single-cell tools. Here we include information regarding:
 
 1. A conceptual overview of the approach
 2. Package requirements
