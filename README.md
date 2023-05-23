@@ -112,11 +112,11 @@ The resulting region clusters can then be visualized using standard Scanpy funct
 ```python
 # In physical space
 sc.set_figure_params(figsize=(8,5))
-sc.pl.embedding(adata, basis='spatial', color='region', s=7)
+sc.pl.embedding(adata, basis='spatial', color='region')
 
 # In UMAP space
 sc.set_figure_params(figsize=(5,5))
-sc.pl.embedding(adata, basis='X_umap_spin', color='region', s=3)
+sc.pl.embedding(adata, basis='X_umap_spin', color='region')
 ```
 Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
 For examples of downstream analysis, see the [tutorial](docs/tutorials/tutorial.ipynb).
