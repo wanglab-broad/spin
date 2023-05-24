@@ -108,7 +108,7 @@ This performs the following steps:
    2. Leiden clustering with a resolution of 0.5 (stored under `adata.obs['region']`)
    3. UMAP (stored under `adata.obsm['X_umap_spin']`)
 
-The resulting region clusters can then be visualized using standard Scanpy functions:
+This process should take ~3 minutes. The resulting region clusters can then be visualized using standard Scanpy functions:
 ```python
 # In physical space
 sc.set_figure_params(figsize=(8,5))
