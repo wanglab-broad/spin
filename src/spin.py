@@ -232,7 +232,7 @@ def _get_nbrs(
     -------
     Updates `adata` with the following fields:
 
-    `.obsm[nbr_idxs]`:
+    `.obsm['nbr_idxs']`:
         Matrix of neighbor indices of shape `n_obs` × `n_nbrs`
     `.uns['n_nbrs']`:
         Number of neighbors used
