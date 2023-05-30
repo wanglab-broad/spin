@@ -38,7 +38,7 @@ def integrate(
     random_state: Optional[int] = 0,
     verbose: Optional[bool] = True,
 ) -> AnnData:
-    """
+    """\
     Smooth and integrate SRT datasets.
     
     Parameters
@@ -51,9 +51,8 @@ def integrate(
         multiple samples.
         If only analyzing a single sample, leave as `None`.
     batch_labels
-        Labels corresponding to each sample. Relevant when integrating across multiple
-        samples. Will be stored under `adata.obs[<batch_key>]`.
-        If only analyzing a single sample, leave as `None`.
+        Labels corresponding to each adata. Will be stored under `adata.obs[<batch_key>]`.
+        Required if passing in multiple adatas. Otherwise, leave as `None`.
     n_nbrs
         Number of nearest neighbors to find for each cell.
         Either provide n_nbrs for each dataset or a single n_nbrs for all datasets.
@@ -87,13 +86,15 @@ def integrate(
     if (type(n_samples) == int) or (n_samples == None):
         n_samples = [n_samples]
 
-    # Split single adata by batch, if batches provided
+    # Split single adata by batch, if batch_key provided
     n_adatas = len(adatas)
-    if (n_adatas == 1) and batch_labels:
-        if verbose:
-            logger.info(f'Splitting adata by `{batch_key}`')
-        adatas = [adatas[0][adatas[0].obs[batch_key]==batch] for batch in batch_labels]
-        n_adatas = len(adatas)
+    if (n_adatas == 1):
+        if batch_key:
+            if verbose:
+                logger.info(f'Splitting adata by `{batch_key}`')
+            batch_labels = adatas[0].obs[batch_key].unique() # TODO: verify automatic batching
+            adatas = [adatas[0][adatas[0].obs[batch_key]==batch] for batch in batch_labels]
+            n_adatas = len(adatas)
 
     # If single n_nbrs/n_samples for multiple batches, clone
     if len(n_nbrs) < n_adatas:
@@ -112,7 +113,6 @@ def integrate(
         )
         _smooth(
             adatas[i],
-            adatas[i].obsm['nbr_idxs'],
             n_samples[i],
             random_state,
         )
@@ -147,7 +147,7 @@ def integrate(
         if verbose:
             logger.info('Integration complete')
 
-    return adata
+    return adata.copy() # copying necessary for multiple runs on single adata
 
 
 def cluster(
@@ -158,7 +158,7 @@ def cluster(
     resolution: float = 0.5,
     verbose: Optional[bool] = True,
 ) -> AnnData:
-    """
+    """\
     Create nearest neighbors graph in latent space and perform UMAP and Leiden.
     
     Parameters
@@ -207,7 +207,7 @@ def cluster(
     if verbose:
         logger.info('Clustering complete')
     
-    return adata
+    return adata.copy()
 
 
 def _get_nbrs(
@@ -215,7 +215,7 @@ def _get_nbrs(
     n_nbrs: int,
     spatial_key: str,
 ) -> np.ndarray:
-    """
+    """\
     Find spatial nearest neighbors of each cell.
     
     Parameters
@@ -231,18 +231,20 @@ def _get_nbrs(
     -------
     Updates `adata` with the following fields:
 
-    `.obsm[nbr_idxs]`:
+    `.obsm['nbr_idxs']`:
         Matrix of neighbor indices of shape `n_obs` × `n_nbrs`
     `.uns['n_nbrs']`:
         Number of neighbors used
     `.uns['spatial_key']`:
         The key to `.obsm` for the domain used to find neighbors  
     """
+    # Find spatial nearest neighbors
     coordinates = adata.obsm[spatial_key]
     nbrs = NearestNeighbors(n_neighbors=n_nbrs)
     nbrs.fit(coordinates)
     _, nbr_idxs = nbrs.kneighbors(coordinates)
 
+    # Save metadata
     adata.obsm['nbr_idxs'] = nbr_idxs
     adata.uns['n_nbrs'] = n_nbrs
     adata.uns['spatial_key'] = spatial_key
@@ -250,11 +252,10 @@ def _get_nbrs(
 
 def _smooth(
     adata: AnnData,
-    nbr_idxs: np.ndarray,
     n_samples: Optional[int],
     random_state: int,
 ) -> np.ndarray:
-    """
+    """\
     Set each cell's representation to the average of its randomly-subsampled neighborhood.
     
     Parameters
@@ -279,15 +280,22 @@ def _smooth(
     `n_samples`:
         Number of random neighbor samples used for averaging
     """
+    # Randomly subsample each cell's neighborhood
     if not n_samples:
-        n_samples = nbr_idxs.shape[1] // 3
+        n_samples = adata.obsm['nbr_idxs'].shape[1] // 3
     np.random.seed(random_state)
-    nbr_idxs_sampled = [np.random.choice(idxs, size=n_samples, replace=False)
-                        for idxs in nbr_idxs]
+    nbr_idxs_sampled = np.array([
+        np.random.choice(idxs, size=n_samples, replace=False)
+        for idxs in adata.obsm['nbr_idxs']
+    ])
+
+    # Set each cell's representation to the average of its subsampled neighborhood
     X_smooth = np.zeros(adata.X.shape)
     for nth_nbrs in np.array(nbr_idxs_sampled).T:
         X_smooth += adata.X[nth_nbrs] / n_samples
 
+    # Save metadata
+    adata.obsm['nbr_idxs_sampled'] = nbr_idxs_sampled
     adata.layers['smooth'] = np.array(X_smooth) # in case adata.X is sparse
     adata.uns['n_samples'] = n_samples
 
