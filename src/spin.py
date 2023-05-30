@@ -317,7 +317,7 @@ def _main(
     verbose: bool,
     random_state: int,
 ):
-    """\
+    """
     Spatially integrate and cluster SRT data using SPIN from the shell.
     
     Parameters

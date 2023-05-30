@@ -2,27 +2,75 @@
 [![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ read the preprint here <br>
 [![Zenodo badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ access the data here <br>
 
-This package is a lightweight, Scanpy-based implementation of the approach described in the manuscript linked above. For a conceptual overview of the approach, see the last section of this document below. For further details, please refer to the manuscript or [tutorial](docs/tutorials/tutorial.ipynb).
+SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the preprint linked above. It enables the alignment and analysis of transcriptionally-defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology, using conventional single-cell tools. Here we include information regarding:
 
-## Installation
+1. A conceptual overview of the approach
+2. Package requirements
+3. Installation instructions
+4. Basic usage principles
+
+For examples of downstream analysis (e.g. differentially-expressed gene analysis and trajectory inference), see the [tutorial](docs/tutorials/tutorial.ipynb) notebook. For further details on SPIN parameters, import SPIN into Python and run `help(spin)`.
+
+## 1. Conceptual overview
+* Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually.
+* However, it does not incorporate spatial information.
+<picture>
+   <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_idea_1_light.png">
+   <source media="(prefers-color-scheme: dark)" srcset="docs/imgs/github_idea_1_dark.png">
+   <img src="docs/imgs/github_idea_1_dark.png" width="500">
+</picture>
+
+* Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across cells in the tissue.
+* This can be done by setting the features of each cell to the average of its spatial neighborhood.
+<picture>
+   <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_idea_2_light.png">
+   <source media="(prefers-color-scheme: dark)" srcset="docs/imgs/github_idea_2_dark.png">
+   <img src="docs/imgs/github_idea_2_dark.png" width="670">
+</picture>
+
+* However, a problem arises when smoothed representations of each cell are compared to one another.
+* Physically adjacent cells will have almost identical neighborhoods and thus almost identical smoothed representations.
+<picture>
+   <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_obstacle_1_light.png">
+   <source media="(prefers-color-scheme: dark)" srcset="docs/imgs/github_obstacle_1_dark.png">
+   <img src="docs/imgs/github_obstacle_1_dark.png" width="550">
+</picture>
+
+* Thus, we end up with nearest neighbors in feature space that are just nearest neighbors in physical space.
+* Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, this leads to reconstruction of physical space in latent space rather than representing the true underlying large-scale molecular patterns.
+* Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
+<picture>
+   <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_obstacle_2_light.png">
+   <source media="(prefers-color-scheme: dark)" srcset="docs/imgs/github_obstacle_2_dark.png">
+   <img src="docs/imgs/github_obstacle_2_dark.png" width="550">
+</picture>
+
+Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features in SRT data, yielding regional analogies for each tool. For more details and examples, please refer to the manuscript and [tutorial](docs/tutorials/tutorial.ipynb).
+
+## 2. Requirements:
+
+### Software:
+* Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
+* Python >= 3.9
+* The only dependency is Scanpy. For details, see [`pyproject.toml`](pyproject.toml).
+
+### Data:
+* One or more SRT datasets in `.h5ad` format
+* An expression matrix under `.X` (both sparse and dense representations supported)
+* Spatial coordinates under `.obsm` (key can be specified with argument `spatial_key`)
+* Batch information
+   * If multiple batches in single dataset, batch labels provided under `.obs` with key `batch_key`.
+   * If multiple batches in separate datasets, batch labels for each dataset provided as input.
+
+## 3. Installation
 
 ### From GitHub:
 ```
 pip install git+https://github.com/wanglab-broad/spin@main
 ```
-Installation should complete within ~2 mins.
+Takes ~5 mins.
 
-## Requirements:
-
-### Software:
-Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
-
-For Python package dependencies, see `pyproject.toml`.
-
-### Data:
-Requires one or more SRT datasets in `.h5ad` format, each including an expression matrix under `.X` and spatial coordinates under `.obsm`.
-
-## Usage
+## 4. Usage
 ### In Python:
 Consider the marmoset and mouse data we provide as a demo:
 ```python
@@ -31,21 +79,49 @@ adata = sc.read_h5ad(
      backup_url='https://zenodo.org/record/TEMP/files/demo.h5ad?download=1'
 )
 ```
-This dataset contains expression and spatial data from marmoset and mouse brains, corresponding to the cell labels `'marmoset'` and `'mouse'` under the key `.obs['species']`.
+This dataset contains expression and spatial data from marmoset and mouse brains, corresponding to the cell labels `'marmoset'` and `'mouse'` under `.obs['species']`.
 
-To spatially integrate this data, the single dataset can be passed into `spin.integrate` while specifying the batch key along with the unique batch labels:
+To spatially integrate and cluster this data, the single dataset can be passed into `spin.integrate` while specifying the batch key, followed by `spin.cluster`:
 ```python
+import spin
+
 adata = spin.integrate(
     adata,
     batch_key='species',
-    batch_labels=['marmoset', 'mouse'],
     n_nbrs=30,
     n_samples=12,
 )
-```
-In short, this applies spatial subsampling and smoothing to each dataset individually (details in manuscript linked above), performs PCA jointly, integrates the resulting PCs using Harmony, and stores the output under `adata.obsm['X_pca_spin']`.
 
-Alternatively, one can provide multiple datasets corresponding to each batch:
+adata = spin.cluster(
+    adata,
+    resolution=0.5
+)
+```
+
+This performs the following steps:
+* `spin.integrate`:
+   1. Subsampling and smoothing of each dataset individually (stored under `adata.layers['smooth']`)
+   2. Joint PCA across both smoothed datasets
+   3. Integration of the resulting PCs using Harmony (stored under `adata.obsm['X_pca_spin']`)
+* `spin.cluster`:
+   1. Latent neighbor search
+   2. Leiden clustering with a resolution of 0.5 (stored under `adata.obs['region']`)
+   3. UMAP (stored under `adata.obsm['X_umap_spin']`)
+
+This process should take ~3 minutes. The resulting region clusters can then be visualized using standard Scanpy functions:
+```python
+# In physical space
+sc.set_figure_params(figsize=(8,5))
+sc.pl.embedding(adata, basis='spatial', color='region')
+
+# In UMAP space
+sc.set_figure_params(figsize=(5,5))
+sc.pl.embedding(adata, basis='X_umap_spin', color='region')
+```
+Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
+For examples of downstream analysis, see the [tutorial](docs/tutorials/tutorial.ipynb).
+
+Alternatively, for integration, one can provide multiple datasets with batch labels corresponding to each dataset:
 ```python
 adata = spin.integrate(
     [adata_marmoset, adata_mouse],
@@ -64,31 +140,7 @@ adata = spin.integrate(
     n_samples=12,
 )
 ```
-
-After integration, the data can then be clustered using `spin.cluster`, which performs UMAP and Leiden on the integrated expression PCs:
-```python
-adata = spin.cluster(
-    adata,
-    resolution=0.5
-)
-```
-Region clusters are stored under `.obs['region']` and UMAP coordinates under `.obsm['X_umap_spin']`.
-
-The resulting region clusters can then be visualized using standard Scanpy functions:
-```python
-# In physical space
-sc.set_figure_params(figsize=(8,5))
-sc.pl.embedding(adata, basis='spatial', color='region', s=7)
-
-# In UMAP space
-sc.set_figure_params(figsize=(5,5))
-sc.pl.embedding(adata, basis='X_umap_spin', color='region', s=3)
-```
-Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
-
-For details on the parameters of `spin.integrate` and `spin.cluster`, run `help(spin)` after importing SPIN into Python.
-
-For details on downstream analysis, please see the [tutorial](docs/tutorials/tutorial.ipynb).
+For further details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
 
 ### From the shell:
 Requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python (e.g. above):
@@ -97,7 +149,6 @@ python spin/src/spin.py \
 --adata_paths data/demo.h5ad \
 --write_path data/demo_integrated.h5ad \
 --batch_key species \
---batch_labels marmoset mouse \
 --n_nbrs 30 \
 --n_samples 12 \
 --resolution "0.5"
@@ -124,28 +175,3 @@ python spin/src/spin.py \
 --n_samples 12 \
 --resolution "0.5"
 ```
-
-## Conceptual overview
-Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually. However, it does not incorporate spatial information.
-<p align="center">
-   <img src="docs/imgs/github_idea_1-01.png" width="500">
-</p>
-
-Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across cells in the tissue. This can be done by setting the features of each cell to the average of its spatial neighborhood.
-<p align="center">
-   <img src="docs/imgs/github_idea_2-01.png" width="670">
-</p>
-
-However, a problem arises when smoothed representations of each cell are compared to one another. Physically adjacent cells will have almost identical neighborhoods and thus identical smoothed representations.
-<p align="center">
-   <img src="docs/imgs/github_obstacle_1-01.png" width="550">
-</p>
-
-Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, we run into a problem: nearest neighbors in feature space are just nearest neighbors in physical space. This leads to reconstruction of physical space in latent space rather than identifying the desired large-scale molecular patterns.
-
-Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
-<p align="center">
-   <img src="docs/imgs/github_obstacle_2-01.png" width="550">
-</p>
-
-Ultimately, this approach enables the application of conventional single-cell tools to spatial molecular features, yielding regional analogies for each tool. For more details and examples, please refer to the manuscript and [tutorial](docs/tutorials/tutorial.ipynb).
