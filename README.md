@@ -85,17 +85,8 @@ To spatially integrate and cluster this data, the single dataset can be passed i
 ```python
 import spin
 
-adata = spin.integrate(
-    adata,
-    batch_key='species',
-    n_nbrs=30,
-    n_samples=12,
-)
-
-adata = spin.cluster(
-    adata,
-    resolution=0.5
-)
+adata = spin.integrate(adata, batch_key='species')
+adata = spin.cluster(adata, resolution=0.5)
 ```
 
 This performs the following steps:
