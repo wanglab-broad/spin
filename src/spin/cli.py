@@ -10,7 +10,7 @@ import argparse
 
 from anndata import AnnData
 
-from spin import integrate, cluster
+from .spin import integrate, cluster
 
 
 # Create logger
