@@ -74,9 +74,13 @@ Takes ~5 mins.
 ### In Python:
 Consider the marmoset and mouse data we provide as a demo:
 ```python
-adata = sc.read_h5ad(
-    'data/demo.h5ad',
-     backup_url='https://zenodo.org/record/TEMP/files/demo.h5ad?download=1'
+adata_marmoset = sc.read(
+    'data/marmoset.h5ad',
+    backup_url='https://zenodo.org/record/8092024/files/marmoset.h5ad?download=1'
+)
+adata_mouse = sc.read(
+    'data/mouse.h5ad',
+    backup_url='https://zenodo.org/record/8092024/files/mouse.h5ad?download=1'
 )
 ```
 This dataset contains expression and spatial data from marmoset and mouse brains, corresponding to the cell labels `'marmoset'` and `'mouse'` under `.obs['species']`.
