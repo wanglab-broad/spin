@@ -122,60 +122,35 @@ sc.pl.embedding(adata, basis='spatial', color='region')
 sc.set_figure_params(figsize=(5,5))
 sc.pl.embedding(adata, basis='X_umap_spin', color='region')
 ```
+For further details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
 Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
 For examples of downstream analysis, see the [tutorial](docs/tutorials/tutorial.ipynb).
 
-Alternatively, for integration, one can provide multiple datasets with batch labels corresponding to each dataset:
-```python
-adata = spin.integrate(
-    [adata_marmoset, adata_mouse],
-    batch_key='species',
-    batch_labels=['marmoset', 'mouse'],
-    n_nbrs=30,
-    n_samples=12,
-)
-```
-
-... or a single dataset for finding regions in just one sample:
-```python
-adata = spin.integrate(
-    adata_marmoset,
-    n_nbrs=30,
-    n_samples=12,
-)
-```
-For further details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
 
 ### From the shell:
 Requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python (e.g. above):
 ```python
 python spin/src/spin.py \
---adata_paths data/demo.h5ad \
---write_path data/demo_integrated.h5ad \
---batch_key species \
---n_nbrs 30 \
---n_samples 12 \
---resolution "0.5"
-```
-
-Just as when running in Python, multiple datasets can be passed in instead:
-```python
-python spin/src/spin.py \
---adata_paths data/demo_marmoset.h5ad data/demo_mouse.h5ad \
---write_path data/demo_integrated.h5ad \
+--adata_paths data/adata_marmoset.h5ad data/adata_mouse.h5ad \
+--write_path data/adata_integrated.h5ad \
 --batch_key species \
 --batch_labels marmoset mouse \
---n_nbrs 30 \
---n_samples 12 \
---resolution "0.5"
+--resolution "0.7"
 ```
 
-... or just a single dataset:
+Just as when running in Python, a single AnnData containing multiple batches can be passed in instead:
 ```python
 python spin/src/spin.py \
---adata_paths data/demo_marmoset.h5ad\
---write_path data/demo_integrated.h5ad \
---n_nbrs 30 \
---n_samples 12 \
---resolution "0.5"
+--adata_paths data/adata.h5ad \
+--write_path data/adata_integrated.h5ad \
+--batch_key species \
+--resolution "0.7"
+```
+
+... or just a single dataset containing a single batch:
+```python
+python spin/src/spin.py \
+--adata_paths data/adata_marmoset.h5ad\
+--write_path data/adata_integrated.h5ad \
+--resolution "0.7"
 ```
