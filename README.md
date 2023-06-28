@@ -128,7 +128,7 @@ For examples of downstream analysis, see the [tutorial](docs/tutorials/tutorial.
 
 
 ### From the shell:
-Requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python (e.g. above):
+Shell submission requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python as above:
 ```python
 python spin/src/spin.py \
 --adata_paths data/adata_marmoset.h5ad data/adata_mouse.h5ad \
