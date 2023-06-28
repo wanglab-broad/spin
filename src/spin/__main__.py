@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import argparse
 
-from funcs import spin
+from .funcs import spin
 
 
 def main(
