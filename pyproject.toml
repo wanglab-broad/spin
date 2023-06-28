@@ -16,5 +16,9 @@ dependencies = [
     "scanpy[leiden,harmony]",
 ]
 
+[tool.setuptools]
+package-dir = {"" = "spin"}
+include-package-data = true
+
 [project.scripts]
 spin = "spin.cli:main"
