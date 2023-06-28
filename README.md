@@ -59,7 +59,7 @@ Ultimately, this approach enables the application of conventional single-cell to
 * An expression matrix under `.X` (both sparse and dense representations supported)
 * Spatial coordinates under `.obsm` (key can be specified with argument `spatial_key`)
 * Batch information
-   * If multiple batches in single dataset, batch labels provided under `.obs` with key `batch_key`.
+   * If multiple batches in single dataset, batch labels provided under column in `.obs` with column name `batch_key`.
    * If multiple batches in separate datasets, batch labels for each dataset provided as input.
 
 ## 3. Installation
