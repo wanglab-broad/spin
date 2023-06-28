@@ -9,6 +9,7 @@ from typing import Optional, Collection
 import argparse
 
 from anndata import AnnData
+import scanpy as sc
 
 from .spin import integrate, cluster
 
