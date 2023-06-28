@@ -42,7 +42,7 @@ def spin(
     verbose: bool = True,
     random_state: int = 0,
 ):
-    """
+    """\
     Spatially integrate and cluster SRT data using SPIN from the shell.
     
     Parameters
@@ -82,9 +82,10 @@ def spin(
     random_state
         Random seed used for smoothing, PCA, and Harmony.
     """
-    assert not ((adatas==None) and (adata_paths==None)), "No AnnData source."
-    assert not ((adatas!=None) and (adata_paths!=None)), "Conflicting AnnData sources."
-
+    adata_source_types = np.array([type(sc.AnnData()), type(None)])
+    n_adata_sources = np.sum(a==type(None))
+    assert n_adata_sources == 1, "Requires either a list of paths OR a list of AnnDatas"
+    
     # Read data
     if adata_paths:
         adatas = []
