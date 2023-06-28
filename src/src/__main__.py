@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import argparse
 
-from .spin import run
+from .spin import spin
 
 
 def main(
@@ -26,7 +26,7 @@ def main(
     verbose,
     random_state,
 ):
-    run(
+    spin(
         adata_paths=adata_paths,
         write_path=write_path,
         batch_key=batch_key,
