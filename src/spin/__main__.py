@@ -4,90 +4,31 @@ Command-line interface for using SPIN from the shell.
 
 from __future__ import annotations
 
-import logging
-from typing import Optional, Collection
 import argparse
 
-from anndata import AnnData
-import scanpy as sc
-
-from .spin import integrate, cluster
-
-
-# Create logger
-logger = logging.getLogger('SPIN')
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+from .spin import spin
 
 
 def main(
-    adata_paths: Collection[str],
-    write_path: str,
-    batch_key: Optional[str],
-    batch_labels: Optional[Collection[str]],
-    n_nbrs: Collection[int],
-    n_samples: Collection[Optional[int]],
-    spatial_key: str,
-    n_pcs: int,
-    svd_solver: str,
-    pca_key: str,
-    region_key: str,
-    umap_key: str,
-    resolution: int,
-    verbose: bool,
-    random_state: int,
+    adata_paths,
+    write_path,
+    batch_key,
+    batch_labels,
+    n_nbrs,
+    n_samples,
+    spatial_key,
+    n_pcs,
+    svd_solver,
+    pca_key,
+    region_key,
+    umap_key,
+    resolution,
+    verbose,
+    random_state,
 ):
-    """
-    Spatially integrate and cluster SRT data using SPIN from the shell.
-    
-    Parameters
-    ----------
-    adata_paths
-        Paths to one or more SRT datasets.
-    write_path
-        Path to write integrated data to.
-    batch_key
-        The key to batch information within `adata.obs`.
-    batch_labels
-        Labels corresponding to each batch. Relevant when integrating across multiple
-        `adatas`. Will be stored under `adata.obs[<batch_key>]`.
-    n_nbrs
-        Number of nearest neighbors to find for each cell.
-    n_samples
-        Number of random neighbor samples used for averaging.
-    spatial_key
-        The key to spatial coordinates within `adata.obsm`.
-    n_pcs
-        Number of PCs to calculate for dimension reduction.
-    svd_solver
-        SVD solver to use.
-    pca_key
-        The key to store PCA output under within `adata.obsm`.
-    region_key
-        The key to store region labels under within `adata.obs`.
-    umap_key
-        The key to store UMAP output under within `adata.obsm`.
-    resolution
-        Resolution for Leiden clustering
-    verbose
-        Display updates on function progress.
-    random_state
-        Random seed used for smoothing, PCA, and Harmony.
-    """
-    # Read data
-    adatas = []
-    for path in adata_paths:
-        if verbose:
-            logger.info(f'Reading {path}')
-        adatas.append(sc.read_h5ad(path))
-
-    # Integrate spatial features across samples
-    adata = integrate(
-        adatas,
+    spin(
+        adata_paths=adata_paths,
+        write_path=write_path,
         batch_key=batch_key,
         batch_labels=batch_labels,
         n_nbrs=n_nbrs,
@@ -96,24 +37,12 @@ def main(
         n_pcs=n_pcs,    
         svd_solver=svd_solver,
         pca_key=pca_key,
-        random_state=random_state,
-        verbose=verbose,
-    )
-
-    # Cluster integrated samples to find regions
-    adata = cluster(
-        adata,
-        pca_key=pca_key,
         region_key=region_key,
         umap_key=umap_key,
         resolution=resolution,
         verbose=verbose,
+        random_state=random_state,
     )
-
-    # Write data
-    if verbose:
-        adata.write(write_path)
-        logger.info(f'Written to {write_path}')
 
 
 # Parse arguments

@@ -24,7 +24,109 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-def integrate(
+def spin(
+    adatas: Optional[Collection[AnnData] | AnnData] = None,
+    adata_paths: Optional[Collection[str]] = None,
+    write_path: Optional[str] = None,
+    batch_key: Optional[str] = None,
+    batch_labels: Optional[Collection[str]] = None,
+    n_nbrs: Collection[int] | int = 30,
+    n_samples: Collection[Optional[int]] | Optional[int] = None,
+    spatial_key: str = 'spatial',
+    n_pcs: int = 50,
+    svd_solver: str = 'randomized',
+    pca_key: str = 'X_pca_spin',
+    region_key: str = 'region',
+    umap_key: str = 'X_umap_spin',
+    resolution: float = 0.5,
+    verbose: bool = True,
+    random_state: int = 0,
+):
+    """
+    Spatially integrate and cluster SRT data using SPIN from the shell.
+    
+    Parameters
+    ----------
+    adatas
+        One or more SRT datasets.
+        Assumed to be have been normalized prior.
+    adata_paths
+        Paths to one or more SRT datasets.
+    write_path
+        Path to write integrated data to.
+    batch_key
+        The key to batch information within `adata.obs`.
+    batch_labels
+        Labels corresponding to each batch. Relevant when integrating across multiple
+        `adatas`. Will be stored under `adata.obs[<batch_key>]`.
+    n_nbrs
+        Number of nearest neighbors to find for each cell.
+    n_samples
+        Number of random neighbor samples used for averaging.
+    spatial_key
+        The key to spatial coordinates within `adata.obsm`.
+    n_pcs
+        Number of PCs to calculate for dimension reduction.
+    svd_solver
+        SVD solver to use.
+    pca_key
+        The key to store PCA output under within `adata.obsm`.
+    region_key
+        The key to store region labels under within `adata.obs`.
+    umap_key
+        The key to store UMAP output under within `adata.obsm`.
+    resolution
+        Resolution for Leiden clustering
+    verbose
+        Display updates on function progress.
+    random_state
+        Random seed used for smoothing, PCA, and Harmony.
+    """
+    assert (adatas==None) or (adata_paths==None) "Must have one AnnData source."
+
+    # Read data
+    if adata_paths:
+        adatas = []
+        for path in adata_paths:
+            if verbose:
+                logger.info(f'Reading {path}')
+            adatas.append(sc.read_h5ad(path))
+
+    # Integrate spatial features across samples
+    adata = _integrate(
+        adatas,
+        batch_key=batch_key,
+        batch_labels=batch_labels,
+        n_nbrs=n_nbrs,
+        n_samples=n_samples,
+        spatial_key=spatial_key,
+        n_pcs=n_pcs,    
+        svd_solver=svd_solver,
+        pca_key=pca_key,
+        random_state=random_state,
+        verbose=verbose,
+    )
+
+    # Cluster integrated samples to find regions
+    adata = _cluster(
+        adata,
+        pca_key=pca_key,
+        region_key=region_key,
+        umap_key=umap_key,
+        resolution=resolution,
+        verbose=verbose,
+    )
+
+    # Write data
+    if write_path:
+        if verbose:
+            adata.write(write_path)
+            logger.info(f'Written to {write_path}')
+    else:
+        return adata
+
+
+def _integrate(
     adatas: Collection[AnnData] | AnnData,
     batch_key: Optional[str] = None,
     batch_labels: Optional[Collection[str]] = None,
@@ -34,8 +136,8 @@ def integrate(
     n_pcs: int = 50,
     svd_solver: str = 'randomized',
     pca_key: str = 'X_pca_spin',
-    random_state: Optional[int] = 0,
-    verbose: Optional[bool] = True,
+    random_state: int = 0,
+    verbose: bool = True,
 ) -> AnnData:
     """\
     Smooth and integrate SRT datasets.
@@ -43,7 +145,7 @@ def integrate(
     Parameters
     ----------
     adatas
-        Collection of SRT datasets.
+        One or more SRT datasets.
         Assumed to be have been normalized prior.
     batch_key
         The key to batch information within `adata.obs`. Relevant when integrating across
@@ -149,13 +251,13 @@ def integrate(
     return adata.copy() # copying necessary for multiple runs on single AnnData
 
 
-def cluster(
+def _cluster(
     adata: AnnData,
     pca_key: str = 'X_pca_spin',
     region_key: str = 'region',
     umap_key: str = 'X_umap_spin',
     resolution: float = 0.5,
-    verbose: Optional[bool] = True,
+    verbose: bool = True,
 ) -> AnnData:
     """\
     Create nearest neighbors graph in latent space and perform UMAP and Leiden.
