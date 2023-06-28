@@ -17,4 +17,4 @@ dependencies = [
 ]
 
 [project.scripts]
-spin = "cli:main"
+spin = "spin:cli"
