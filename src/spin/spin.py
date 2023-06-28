@@ -82,7 +82,7 @@ def spin(
     random_state
         Random seed used for smoothing, PCA, and Harmony.
     """
-    assert (adatas==None) or (adata_paths==None) "Must have one AnnData source."
+    assert (adatas==None) or (adata_paths==None), "Must have one AnnData source."
 
     # Read data
     if adata_paths:
