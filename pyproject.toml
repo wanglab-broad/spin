@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [project]
 name = "spin"
 version = "0.0.1"
-description = "SPatial INtegration of spatially-resolved transcriptomics data"
+description = "SPatial INtegration of spatially resolved transcriptomics data"
 authors = [
     {name = "Kamal Maher", email = "kmaher@mit.edu"},
 ]
