@@ -13,6 +13,34 @@ from anndata import AnnData
 from .spin import integrate, cluster
 
 
+# Parse arguments
+parser = argparse.ArgumentParser(
+    description='SPatially INtegrate and cluster one or more spatially resolved \
+                    transcriptomics datasets'
+)
+parser.add_argument('--adata_paths', type=str, nargs='+')
+parser.add_argument('--write_path', type=str)
+parser.add_argument('--batch_key', type=str, default=None)
+parser.add_argument('--batch_labels', type=str, nargs='+', default=None)
+parser.add_argument('--n_nbrs', type=int, nargs='+', default=[30])
+parser.add_argument('--n_samples', type=int, nargs='+', default=[None])
+parser.add_argument('--spatial_key', type=str, default='spatial')
+parser.add_argument('--n_pcs', type=int, default=50)
+parser.add_argument('--svd_solver', default='randomized')
+parser.add_argument('--pca_key', default='X_pca_spin')
+parser.add_argument('--region_key', default='region')
+parser.add_argument('--umap_key', default='X_umap_spin')
+parser.add_argument('--resolution', type=float, default=0.5)
+parser.add_argument('--verbose', type=bool, default=True)
+parser.add_argument('--random_state', type=int, default=0)
+args = parser.parse_args()
+
+main(args.adata_paths, args.write_path, args.batch_key, args.batch_labels,
+        args.n_nbrs, args.n_samples, args.spatial_key, args.n_pcs, args.svd_solver,
+        args.pca_key, args.region_key, args.umap_key, args.resolution, args.verbose,
+        args.random_state)
+
+
 # Create logger
 logger = logging.getLogger('SPIN')
 logger.setLevel(logging.INFO)
@@ -113,32 +141,3 @@ def main(
     if verbose:
         adata.write(write_path)
         logger.info(f'Written to {write_path}')
-
-
-if __name__=='__main__':
-
-    parser = argparse.ArgumentParser(
-        description='SPatially INtegrate and cluster one or more spatially resolved \
-                     transcriptomics datasets'
-    )
-    parser.add_argument('--adata_paths', type=str, nargs='+')
-    parser.add_argument('--write_path', type=str)
-    parser.add_argument('--batch_key', type=str, default=None)
-    parser.add_argument('--batch_labels', type=str, nargs='+', default=None)
-    parser.add_argument('--n_nbrs', type=int, nargs='+', default=[30])
-    parser.add_argument('--n_samples', type=int, nargs='+', default=[None])
-    parser.add_argument('--spatial_key', type=str, default='spatial')
-    parser.add_argument('--n_pcs', type=int, default=50)
-    parser.add_argument('--svd_solver', default='randomized')
-    parser.add_argument('--pca_key', default='X_pca_spin')
-    parser.add_argument('--region_key', default='region')
-    parser.add_argument('--umap_key', default='X_umap_spin')
-    parser.add_argument('--resolution', type=float, default=0.5)
-    parser.add_argument('--verbose', type=bool, default=True)
-    parser.add_argument('--random_state', type=int, default=0)
-    args = parser.parse_args()
-
-    main(args.adata_paths, args.write_path, args.batch_key, args.batch_labels,
-         args.n_nbrs, args.n_samples, args.spatial_key, args.n_pcs, args.svd_solver,
-         args.pca_key, args.region_key, args.umap_key, args.resolution, args.verbose,
-         args.random_state)
