@@ -1,4 +1,10 @@
+from __future__ import annotations
+
+import logging
+from typing import Optional, Collection
 import argparse
+
+from anndata import AnnData
 
 from spin import integrate, cluster
 
