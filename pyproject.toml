@@ -17,8 +17,8 @@ dependencies = [
 ]
 
 [tool.setuptools]
-package-dir = {"" = "spin"}
+package-dir = {"" = "src"}
 include-package-data = true
 
 [project.scripts]
-spin = "spin.__main__:main"
+spin = "spin.cli:main"
