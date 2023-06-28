@@ -15,6 +15,10 @@ requires-python = ">=3.9"
 dependencies = [
     "scanpy[leiden,harmony]",
 ]
+[project.entry-points]
+console-scripts = [
+    "spin = spin.cli:main"
+]
 
-[tool.flit.scripts]
+[project.scripts]
 spin = "spin.cli:main"
