@@ -88,7 +88,7 @@ adata_mouse = sc.read(
 
 These datasets can be spatially integrated and clustered using `spin`. The `batch_key` argument corresponds to the name of a new column in `adata.obs` that stores the batch labels. The `batch_labels` argument is a list of these batch labels in the same order as the input AnnDatas:
 ```python
-import spin
+from spin import spin
 
 adata = spin(
     adatas=[adata_marmoset, adata_mouse],
