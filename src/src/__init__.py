@@ -2,4 +2,4 @@
 Spatially integrate spatially-resolved transcriptomics (SRT) datasets.
 """
 
-from .import spin
+from . import spin
