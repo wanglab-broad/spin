@@ -106,8 +106,8 @@ This performs the following steps:
    2. Joint PCA across both smoothed datasets
    3. Integration of the resulting PCs using Harmony (stored under `adata.obsm['X_pca_spin']`)
 * `spin.cluster`:
-   1. Latent neighbor search
-   2. Leiden clustering with a resolution of 0.5 (stored under `adata.obs['region']`)
+   1. Latent nearest neighbor search
+   2. Leiden clustering with a resolution of 0.7 (stored under `adata.obs['region']`)
    3. UMAP (stored under `adata.obsm['X_umap_spin']`)
 Note that `spin.cluster` can equivalently take as input a single AnnData containing multiple labeled batches. It can also take a single AnnData containing one batch for finding regions in a single dataset. For examples, see the [tutorial](docs/tutorials/tutorial.ipynb).
 
