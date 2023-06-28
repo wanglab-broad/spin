@@ -16,5 +16,10 @@ dependencies = [
     "scanpy[leiden,harmony]",
 ]
 
-[project.scripts]
-spin = "spin:cli"
+[project.entry-points]
+console_scripts = [
+    "spin = spin.cli:main"
+]
+
+[tool.flit.scripts]
+spin = "spin.cli:main"
