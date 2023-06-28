@@ -129,7 +129,7 @@ For further details on the parameters of `spin.integrate` and `spin.cluster`, im
 ### From the shell:
 Shell submission requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python as above:
 ```python
-python spin/src/spin.py \
+spin \
 --adata_paths data/adata_marmoset.h5ad data/adata_mouse.h5ad \
 --write_path data/adata_integrated.h5ad \
 --batch_key species \
