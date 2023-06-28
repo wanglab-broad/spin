@@ -84,6 +84,7 @@ def spin(
     """
     adata_source_types = np.array([type(sc.AnnData()), type(None)])
     n_adata_sources = np.sum(adata_source_types==type(None))
+    print(n_adata_sources)
     assert n_adata_sources == 1, "Requires either a list of paths OR a list of AnnDatas"
     
     # Read data
