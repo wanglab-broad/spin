@@ -138,19 +138,4 @@ python spin/src/spin.py \
 --resolution "0.7"
 ```
 
-Just as when running in Python, a single AnnData containing multiple batches can be passed in instead:
-```python
-python spin/src/spin.py \
---adata_paths data/adata.h5ad \
---write_path data/adata_integrated.h5ad \
---batch_key species \
---resolution "0.7"
-```
-
-... or just a single dataset containing a single batch:
-```python
-python spin/src/spin.py \
---adata_paths data/adata_marmoset.h5ad\
---write_path data/adata_integrated.h5ad \
---resolution "0.7"
-```
+Just as when running in Python, a single AnnData containing multiple batches can be passed in instead, as well as just a single dataset containing a single batch:
