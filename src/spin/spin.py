@@ -24,7 +24,7 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-def spin(
+def run(
     adatas: Optional[Collection[AnnData] | AnnData] = None,
     adata_paths: Optional[Collection[str]] = None,
     write_path: Optional[str] = None,
