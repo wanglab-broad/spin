@@ -122,10 +122,9 @@ sc.pl.embedding(adata, basis='spatial', color='region')
 sc.set_figure_params(figsize=(4,4))
 sc.pl.embedding(adata, basis='X_umap_spin', color='region')
 ```
-For further details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
 Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
 For examples of downstream analysis, see the [tutorial](docs/tutorials/tutorial.ipynb).
-
+For further details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
 
 ### From the shell:
 Shell submission requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python as above:
