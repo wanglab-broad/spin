@@ -1,5 +1,5 @@
 """
-SPatially INtegrate spatially-resolved transcriptomics (SRT) datasets.
+SPatially INtegrate spatially resolved transcriptomics (SRT) datasets.
 """
 
 from __future__ import annotations
