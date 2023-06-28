@@ -1,8 +1,8 @@
 # SPIN: <ins>sp</ins>atial <ins>in</ins>tegration of spatially-resolved transcriptomics (SRT) data
-[![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ preprint <br>
+[![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ manuscript <br>
 [![Zenodo badge](https://zenodo.org/badge/doi/10.5281/zenodo.8092024.svg)](https://doi.org/10.5281/zenodo.8092024) ⬅️ data <br>
 
-SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the preprint linked above. It enables the alignment and analysis of transcriptionally-defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology, using conventional single-cell tools. Here we include information regarding:
+SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the manuscript linked above. It enables the alignment and analysis of transcriptionally-defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology, using conventional single-cell tools. Here we include information regarding:
 
 1. A conceptual overview of the approach
 2. Package requirements
@@ -72,8 +72,10 @@ Takes ~5 mins.
 
 ## 4. Usage
 ### In Python:
-Consider the marmoset and mouse data we provide as a demo:
+Consider the marmoset and mouse data from the manuscript that we provide as a demo:
 ```python
+import scanpy
+
 adata_marmoset = sc.read(
     'data/marmoset.h5ad',
     backup_url='https://zenodo.org/record/8092024/files/marmoset.h5ad?download=1'
@@ -83,16 +85,21 @@ adata_mouse = sc.read(
     backup_url='https://zenodo.org/record/8092024/files/mouse.h5ad?download=1'
 )
 ```
-This dataset contains expression and spatial data from marmoset and mouse brains, corresponding to the cell labels `'marmoset'` and `'mouse'` under `.obs['species']`.
 
-To spatially integrate and cluster this data, the single dataset can be passed into `spin.integrate` while specifying the batch key, followed by `spin.cluster`:
+These datasets can be spatially integrated using `spin.integrate`. The `batch_key` argument corresponds to the name of a new column in `adata.obs` that stores the batch labels. The `batch_labels` argument is a list of these batch labels in the same order as the input AnnDatas. The resulting spatially integrated data can then be clustered using `spin.cluster`:
 ```python
 import spin
 
-adata = spin.integrate(adata, batch_key='species')
-adata = spin.cluster(adata, resolution=0.5)
+adata = spin.integrate(
+    [adata_marmoset, adata_mouse],
+    batch_key='species',
+    batch_labels=['marmoset', 'mouse'],
+)
+adata = spin.cluster(
+    adata,
+    resolution=0.7
+)
 ```
-
 This performs the following steps:
 * `spin.integrate`:
    1. Subsampling and smoothing of each dataset individually (stored under `adata.layers['smooth']`)
@@ -102,8 +109,10 @@ This performs the following steps:
    1. Latent neighbor search
    2. Leiden clustering with a resolution of 0.5 (stored under `adata.obs['region']`)
    3. UMAP (stored under `adata.obsm['X_umap_spin']`)
+Note that `spin.cluster` can equivalently take as input a single AnnData containing multiple labeled batches. It can also take a single AnnData containing one batch for finding regions in a single dataset. For examples, see the [tutorial](docs/tutorials/tutorial.ipynb).
 
-This process should take ~5 minutes. The resulting region clusters can then be visualized using standard Scanpy functions:
+
+The resulting region clusters can then be visualized using standard Scanpy functions:
 ```python
 # In physical space
 sc.set_figure_params(figsize=(8,5))
