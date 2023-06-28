@@ -78,7 +78,7 @@ def integrate(
     -------
     Copy of adata input containing integrated spatial expression PCs.
     """
-    # Handle non-Collection input (e.g. single adata, n_nbrs, and/or n_samples)
+    # Handle non-Collection input (e.g. single AnnData, n_nbrs, and/or n_samples)
     if type(adatas) == AnnData:
         adatas = [adatas]
     if type(n_nbrs) == int:
