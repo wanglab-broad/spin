@@ -115,11 +115,11 @@ Note that `spin.cluster` can equivalently take as input a single AnnData contain
 The resulting region clusters can then be visualized using standard Scanpy functions:
 ```python
 # In physical space
-sc.set_figure_params(figsize=(8,5))
+sc.set_figure_params(figsize=(7,5))
 sc.pl.embedding(adata, basis='spatial', color='region')
 
 # In UMAP space
-sc.set_figure_params(figsize=(5,5))
+sc.set_figure_params(figsize=(4,4))
 sc.pl.embedding(adata, basis='X_umap_spin', color='region')
 ```
 For further details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
