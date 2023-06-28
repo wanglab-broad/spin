@@ -50,8 +50,8 @@ parser = argparse.ArgumentParser(
     description='SPatially INtegrate and cluster one or more spatially resolved \
                     transcriptomics datasets'
 )
-parser.add_argument('--adata_paths', type=str, nargs='+')
-parser.add_argument('--write_path', type=str)
+parser.add_argument('--adata_paths', type=str, nargs='+', default=None)
+parser.add_argument('--write_path', type=str, default=None)
 parser.add_argument('--batch_key', type=str, default=None)
 parser.add_argument('--batch_labels', type=str, nargs='+', default=None)
 parser.add_argument('--n_nbrs', type=int, nargs='+', default=[30])
