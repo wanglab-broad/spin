@@ -21,4 +21,4 @@ package-dir = {"" = "spin"}
 include-package-data = true
 
 [project.scripts]
-spin = "spin.cli:main"
+spin = "spin.__main__:main"
