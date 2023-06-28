@@ -223,8 +223,8 @@ def _integrate(
     # Concatenate batches and add metadata
     if n_adatas > 1:
         adata = sc.concat(adatas, keys=batch_labels, label=batch_key, join='inner')
-        adata.uns['n_nbrs'] = n_nbrs
-        adata.uns['n_samples'] = n_samples
+        adata.uns['n_nbrs'] = [adatas[i].uns['n_nbrs'] for i in range(n_adatas)]
+        adata.uns['n_samples'] = [adatas[i].uns['n_samples'] for i in range(n_adatas)]
     else:
         adata = adatas[0]
 
