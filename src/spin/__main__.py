@@ -26,7 +26,7 @@ def main(
     verbose,
     random_state,
 ):
-    spin(
+    spin.run(
         adata_paths=adata_paths,
         write_path=write_path,
         batch_key=batch_key,
