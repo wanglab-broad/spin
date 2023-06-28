@@ -1,3 +1,7 @@
+"""
+Command-line interface for using SPIN from the shell.
+"""
+
 from __future__ import annotations
 
 import logging
@@ -7,6 +11,16 @@ import argparse
 from anndata import AnnData
 
 from spin import integrate, cluster
+
+
+# Create logger
+logger = logging.getLogger('SPIN')
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
 
 def main(
