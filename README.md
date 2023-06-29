@@ -72,7 +72,7 @@ Takes ~5 mins.
 
 ## 4. Usage
 ### In Python:
-Consider the marmoset and mouse data from the manuscript that we provide as a demo:
+Consider the marmoset and mouse data from the manuscript which we provide as a demo:
 ```python
 import scanpy
 
