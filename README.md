@@ -59,7 +59,7 @@ Ultimately, this approach enables the application of conventional single-cell to
 * An expression matrix under `.X` (both sparse and dense representations supported)
 * Spatial coordinates under `.obsm` (key can be specified with argument `spatial_key`)
 * Batch information
-   * If multiple batches in single dataset, batch labels provided under `.obs` with key `batch_key`.
+   * If multiple batches in single dataset, batch labels provided under column in `.obs` with column name `batch_key`.
    * If multiple batches in separate datasets, batch labels for each dataset provided as input.
 
 ## 3. Installation
@@ -86,30 +86,27 @@ adata_mouse = sc.read(
 )
 ```
 
-These datasets can be spatially integrated using `spin.integrate`. The `batch_key` argument corresponds to the name of a new column in `adata.obs` that stores the batch labels. The `batch_labels` argument is a list of these batch labels in the same order as the input AnnDatas. The resulting spatially integrated data can then be clustered using `spin.cluster`:
+These datasets can be spatially integrated and clustered using `spin`. The `batch_key` argument corresponds to the name of a new column in `adata.obs` that stores the batch labels. The `batch_labels` argument is a list of these batch labels in the same order as the input AnnDatas:
 ```python
-import spin
+from spin import spin
 
-adata = spin.integrate(
-    [adata_marmoset, adata_mouse],
+adata = spin(
+    adatas=[adata_marmoset, adata_mouse],
     batch_key='species',
     batch_labels=['marmoset', 'mouse'],
-)
-adata = spin.cluster(
-    adata,
     resolution=0.7
 )
 ```
 This performs the following steps:
-* `spin.integrate`:
+* `integrate`:
    1. Subsampling and smoothing of each dataset individually (stored under `adata.layers['smooth']`)
    2. Joint PCA across both smoothed datasets
    3. Integration of the resulting PCs using Harmony (stored under `adata.obsm['X_pca_spin']`)
-* `spin.cluster`:
+* `cluster`:
    1. Latent nearest neighbor search
    2. Leiden clustering with a resolution of 0.7 (stored under `adata.obs['region']`)
    3. UMAP (stored under `adata.obsm['X_umap_spin']`)
-Note that `spin.cluster` can equivalently take as input a single AnnData containing multiple labeled batches. It can also take a single AnnData containing one batch for finding regions in a single dataset. For examples, see the [tutorial](docs/tutorials/tutorial.ipynb).
+Note that `spin` can equivalently take as input a single AnnData containing multiple labeled batches. It can also take a single AnnData containing one batch for finding regions in a single dataset. For examples, see the [tutorial](docs/tutorials/tutorial.ipynb).
 
 
 The resulting region clusters can then be visualized using standard Scanpy functions:
@@ -124,13 +121,13 @@ sc.pl.embedding(adata, basis='X_umap_spin', color='region')
 ```
 Downstream analysis (e.g. DEG analysis, trajectory inference) can then be performed using standard Scanpy functions as well.
 For examples of downstream analysis, see the [tutorial](docs/tutorials/tutorial.ipynb).
-For further details on the parameters of `spin.integrate` and `spin.cluster`, import SPIN into Python and run `help(spin)`.
+For further details on the parameters of `spin`, import SPIN into Python as shown above and run `help(spin)`.
 
 ### From the shell:
 Shell submission requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python as above:
 ```python
-python spin/src/spin.py \
---adata_paths data/adata_marmoset.h5ad data/adata_mouse.h5ad \
+spin \
+--adata_paths data/marmoset.h5ad data/mouse.h5ad \
 --write_path data/adata_integrated.h5ad \
 --batch_key species \
 --batch_labels marmoset mouse \
