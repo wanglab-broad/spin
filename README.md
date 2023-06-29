@@ -130,7 +130,7 @@ Shell submission requires a read path to the relevant dataset(s) as well as a wr
 ```python
 spin \
 --adata_paths data/marmoset.h5ad data/mouse.h5ad \
---write_path data/adata_integrated.h5ad \
+--write_path data/marmoset_mouse_spin.h5ad \
 --batch_key species \
 --batch_labels marmoset mouse \
 --resolution "0.7"
