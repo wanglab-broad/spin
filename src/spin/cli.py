@@ -2,8 +2,6 @@
 Command-line interface for using SPIN from the shell.
 """
 
-from __future__ import annotations
-
 import argparse
 
 from .spin import spin
@@ -51,8 +49,3 @@ def spin_cli():
         verbose=args.verbose,
         random_state=args.random_state,
     )
-
-#main(args.adata_paths, args.write_path, args.batch_key, args.batch_labels,
-        #args.n_nbrs, args.n_samples, args.spatial_key, args.n_pcs, args.svd_solver,
-        #args.pca_key, args.region_key, args.umap_key, args.resolution, args.verbose,
-        #args.random_state)
