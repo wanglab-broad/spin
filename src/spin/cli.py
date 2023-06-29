@@ -9,23 +9,8 @@ import argparse
 from .spin import spin
 
 
-def spin_cli(
-    adata_paths,
-    write_path,
-    batch_key,
-    batch_labels,
-    n_nbrs,
-    n_samples,
-    spatial_key,
-    n_pcs,
-    svd_solver,
-    pca_key,
-    region_key,
-    umap_key,
-    resolution,
-    verbose,
-    random_state,
-):
+def spin_cli():
+    
     # Parse arguments
     parser = argparse.ArgumentParser(
         description='SPatially INtegrate and cluster one or more spatially resolved \
