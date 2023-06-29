@@ -136,4 +136,4 @@ spin \
 --resolution "0.7"
 ```
 
-Just as when running in Python, a single AnnData containing multiple batches can be passed in instead, as well as just a single dataset containing a single batch:
+Just as when running in Python, a single AnnData containing multiple batches can be passed in instead, as well as just a single dataset containing a single batch.
