@@ -127,7 +127,7 @@ For further details on the parameters of `spin`, import SPIN into Python as show
 Shell submission requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python as above:
 ```python
 spin \
---adata_paths data/adata_marmoset.h5ad data/adata_mouse.h5ad \
+--adata_paths data/marmoset.h5ad data/mouse.h5ad \
 --write_path data/adata_integrated.h5ad \
 --batch_key species \
 --batch_labels marmoset mouse \
