@@ -9,7 +9,7 @@ import argparse
 from .spin import spin
 
 
-def main(
+def spin_cli(
     adata_paths,
     write_path,
     batch_key,
