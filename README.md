@@ -20,7 +20,7 @@ For examples of downstream analysis (e.g. differentially expressed gene analysis
    <img src="docs/imgs/github_idea_1_dark.png" width="500">
 </picture>
 
-* Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across cells in the tissue.
+* Arguably the simplest way to incorporate spatial information and identify molecular *tissue regions* is to spatially smooth gene expression features across neighboring cells in the tissue.
 * This can be done by setting the features of each cell to the average of its spatial neighborhood.
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_idea_2_light.png">
