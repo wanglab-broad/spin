@@ -9,7 +9,7 @@ SPIN is a lightweight, Scanpy-based implementation of the subsampling and smooth
 3. Installation instructions
 4. Basic usage principles
 
-For examples of downstream analysis (e.g. differentially expressed gene analysis and trajectory inference), see the [tutorial](docs/tutorials/tutorial.ipynb) notebook. For further details on SPIN parameters, import SPIN into Python and run `help(spin)`.
+For examples of downstream analysis (e.g. differentially expressed gene analysis and trajectory inference), see the [tutorial](docs/tutorials/tutorial.ipynb) notebook. For further details on SPIN parameters, import SPIN into Python as shown below and run `help(spin)`.
 
 ## 1. Conceptual overview
 * Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually.
