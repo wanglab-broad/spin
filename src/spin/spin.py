@@ -121,8 +121,8 @@ def spin(
 
     # Write data
     if write_path:
+        adata.write(write_path)
         if verbose:
-            adata.write(write_path)
             logger.info(f'Written to {write_path}')
     else:
         return adata
