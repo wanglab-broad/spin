@@ -2,14 +2,14 @@
 [![Biorxiv badge](https://zenodo.org/badge/doi/TEMP)](https://doi.org/TEMP) ⬅️ manuscript <br>
 [![Zenodo badge](https://zenodo.org/badge/doi/10.5281/zenodo.8092024.svg)](https://doi.org/10.5281/zenodo.8092024) ⬅️ data <br>
 
-SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the manuscript linked above. It enables the alignment and analysis of transcriptionally-defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology, using conventional single-cell tools. Here we include information regarding:
+SPIN is a lightweight, Scanpy-based implementation of the subsampling and smoothing approach described in the manuscript linked above. It enables the alignment and analysis of transcriptionally defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology, using conventional single-cell tools. Here we include information regarding:
 
 1. A conceptual overview of the approach
 2. Package requirements
 3. Installation instructions
 4. Basic usage principles
 
-For examples of downstream analysis (e.g. differentially-expressed gene analysis and trajectory inference), see the [tutorial](docs/tutorials/tutorial.ipynb) notebook. For further details on SPIN parameters, import SPIN into Python and run `help(spin)`.
+For examples of downstream analysis (e.g. differentially expressed gene analysis and trajectory inference), see the [tutorial](docs/tutorials/tutorial.ipynb) notebook. For further details on SPIN parameters, import SPIN into Python and run `help(spin)`.
 
 ## 1. Conceptual overview
 * Conventional single-cell analysis can identify molecular *cell types* by considering each cell individually.
@@ -37,7 +37,7 @@ For examples of downstream analysis (e.g. differentially-expressed gene analysis
 </picture>
 
 * Thus, we end up with nearest neighbors in feature space that are just nearest neighbors in physical space.
-* Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, this leads to reconstruction of physical space in latent space rather than representing the true underlying large-scale molecular patterns.
+* Because conventional methods for downstream anlaysis rely on the nearest neighbors graph in feature space, this leads to reconstruction of physical space in latent space rather than representing the true underlying large scale molecular patterns.
 * Here, we implement an approach in which each cell's spatial neighborhood is randomly subsampled before averaging, allowing the *exact neighborhood* composition to vary while still maintaining the *general molecular* composition.
 <picture>
    <source media="(prefers-color-scheme: light)" srcset="docs/imgs/github_obstacle_2_light.png">
