@@ -124,6 +124,8 @@ For examples of downstream analysis, see the [tutorial](docs/tutorials/tutorial.
 For further details on the parameters of `spin`, import SPIN into Python as shown above and run `help(spin)`.
 
 ### From the shell:
+SPIN can be executed from the shell using the `spin` command as shown below (the path is identified automatically; see [`spin_cli`](src/spin/cli.py) and [`pyproject.toml`](pyproject.toml))
+
 Shell submission requires a read path to the relevant dataset(s) as well as a write path for the output dataset. Otherwise, provide the same parameters you would when running in Python as above:
 ```python
 spin \
