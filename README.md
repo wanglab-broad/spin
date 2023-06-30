@@ -87,7 +87,7 @@ adata_mouse = sc.read(
 )
 ```
 
-These datasets can be spatially integrated and clustered using `spin`. The `batch_key` argument corresponds to the name of a new column in `adata.obs` that stores the batch labels. The `batch_labels` argument is a list of these batch labels in the same order as the input AnnDatas:
+These datasets can be spatially integrated and clustered using `spin`. The `batch_key` argument corresponds to the name of a new column in `adata.obs` that stores the batch labels for each dataset. The `batch_labels` argument is a list of these batch labels in the same order as the input AnnDatas:
 ```python
 from spin import spin
 
