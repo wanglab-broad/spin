@@ -49,6 +49,9 @@ Ultimately, this approach enables the application of conventional single-cell to
 
 ## 2. Requirements:
 
+### Install:
+* Command Line Tools is required for for installing this package from GitHub. While it comes standard on most machines, those without it may encounter an `xcrun: error` when following the installation instructions below. See [here](https://apple.stackexchange.com/questions/254380/why-am-i-getting-an-invalid-active-developer-path-when-attempting-to-use-git-a) for simple installation instructions.
+
 ### Software:
 * Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
 * Python >= 3.9
@@ -69,8 +72,6 @@ Ultimately, this approach enables the application of conventional single-cell to
 pip install git+https://github.com/wanglab-broad/spin@main
 ```
 Takes ~5 mins.
-
-While the required Command Line Tools come standard on most machines, those without it may encounter an `xcrun: error`. See [here](https://apple.stackexchange.com/questions/254380/why-am-i-getting-an-invalid-active-developer-path-when-attempting-to-use-git-a) for simple installation instructions.
 
 ## 4. Usage
 ### In Python:
