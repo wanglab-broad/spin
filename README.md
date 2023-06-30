@@ -70,6 +70,8 @@ pip install git+https://github.com/wanglab-broad/spin@main
 ```
 Takes ~5 mins.
 
+While the required Command Line Tools come standard on most machines, those without it may encounter an `xcrun: error`. See [here](https://apple.stackexchange.com/questions/254380/why-am-i-getting-an-invalid-active-developer-path-when-attempting-to-use-git-a) for simple installation instructions.
+
 ## 4. Usage
 ### In Python:
 Consider the marmoset and mouse data from the manuscript which we provide as a demo:
