@@ -76,7 +76,7 @@ While the required Command Line Tools come standard on most machines, those with
 ### In Python:
 Consider the marmoset and mouse data from the manuscript which we provide as a demo:
 ```python
-import scanpy
+import scanpy as sc
 
 adata_marmoset = sc.read(
     'data/marmoset.h5ad',
