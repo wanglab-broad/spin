@@ -51,7 +51,7 @@ Ultimately, this approach enables the application of conventional single-cell to
 
 ### Software:
 * Tested on MacOS (Monterey, Ventura) and Linux (Red Hat Enterprise Linux 7).
-* Command Line Tools is required for installing this package from GitHub. While it comes standard on most machines, those without it may encounter an `xcrun: error` when following the installation instructions below. See [here](https://apple.stackexchange.com/questions/254380/why-am-i-getting-an-invalid-active-developer-path-when-attempting-to-use-git-a) for simple instructions on how to install it.
+* Command Line Tools is required for `pip` installing this package from GitHub. While it comes standard on most machines, those without it may encounter an `xcrun: error` when following the installation instructions below. See [here](https://apple.stackexchange.com/questions/254380/why-am-i-getting-an-invalid-active-developer-path-when-attempting-to-use-git-a) for simple instructions on how to install it.
 * Python >= 3.9
 * The only dependency is Scanpy. For details, see [`pyproject.toml`](pyproject.toml).
 
