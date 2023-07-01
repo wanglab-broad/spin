@@ -107,6 +107,7 @@ This performs the following steps:
    1. Latent nearest neighbor search
    2. Leiden clustering with a resolution of 0.7 (stored under `adata.obs['region']`)
    3. UMAP (stored under `adata.obsm['X_umap_spin']`)
+
 Note that `spin` can equivalently take as input a single AnnData containing multiple labeled batches. It can also take a single AnnData containing one batch for finding regions in a single dataset. For examples, see the [tutorial](docs/tutorials/tutorial.ipynb).
 
 
