@@ -43,7 +43,7 @@ def spin(
     random_state: int = 0,
 ):
     """\
-    Spatially integrate and cluster SRT data using SPIN from the shell.
+    Spatially integrate and cluster SRT data using SPIN.
     
     Parameters
     ----------
