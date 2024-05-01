@@ -290,14 +290,6 @@ def _cluster(
         use_rep=pca_key,
         key_added=region_key,
     )
-    if verbose:
-        logger.info('Leiden clustering')
-    sc.tl.leiden(
-        adata,
-        resolution=resolution,
-        key_added=region_key,
-        neighbors_key=region_key,
-    )
     if umap_key:
         if verbose:
             logger.info('Performing UMAP')
@@ -308,8 +300,16 @@ def _cluster(
         ).obsm['X_umap']
         adata.obsm[umap_key] = umap
     if verbose:
+        logger.info('Leiden clustering')
+    sc.tl.leiden(
+        adata,
+        resolution=resolution,
+        key_added=region_key,
+        neighbors_key=region_key,
+    )
+    if verbose:
         logger.info('Clustering complete')
-    
+
     return adata.copy()
 
 
