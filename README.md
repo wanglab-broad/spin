@@ -1,6 +1,6 @@
 # SPIN: <ins>sp</ins>atial <ins>in</ins>tegration of spatially resolved transcriptomics (SRT) data
 [![Biorxiv badge](https://zenodo.org/badge/doi/10.1101/2023.06.30.547258.svg)](https://doi.org/10.1101/2023.06.30.547258) ⬅️ manuscript <br>
-[![Zenodo badge](https://zenodo.org/badge/doi/10.5281/zenodo.8092024.svg)](https://doi.org/10.5281/zenodo.8092024) ⬅️ data <br>
+[![Zenodo badge](https://zenodo.org/badge/doi/10.5281/zenodo.13883268.svg)](https://doi.org/10.5281/zenodo.13883268) ⬅️ data <br>
 
 SPIN is a simple, Scanpy-based implementation of the subsampling and smoothing approach described in the manuscript *Mitigating autocorrelation during spatially resolved transcriptomics data analysis*. It enables the alignment and analysis of transcriptionally defined tissue regions across multiple SRT datasets, regardless of morphology or experimental technology, using conventional single-cell tools. Here we include information regarding:
 
